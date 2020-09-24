@@ -63,7 +63,7 @@ export default class MobileItineraryWrapper extends React.Component {
     } else {
       this.context.router.push({
         ...this.context.location,
-        pathname: `${this.context.location.pathname}/kartta`,
+        pathname: `${this.context.location.pathname}/map`,
       });
     }
     addAnalyticsEvent({

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import DTSearchAutosuggest from './DTSearchAutosuggest';
 import { saveSearch } from '../action/SearchActions';
 import { dtLocationShape } from '../util/shapes';
-import { searchPlace } from '../util/searchUtils';
+import { getJson } from '../util/xhrPromise';
 
 class DTOldSearchSavingAutosuggest extends React.Component {
   static contextTypes = {
@@ -56,7 +56,9 @@ class DTOldSearchSavingAutosuggest extends React.Component {
     }
 
     if (item.type === 'OldSearch' && item.properties.gid) {
-      searchPlace(item.properties.gid, this.context.config).then(data => {
+      getJson(this.context.config.URL.PELIAS_PLACE, {
+        ids: item.properties.gid,
+      }).then(data => {
         const newItem = { ...item };
         if (data.features != null && data.features.length > 0) {
           // update only position. It is surprising if, say, the name changes at selection.

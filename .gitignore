@@ -19,6 +19,7 @@ gemini-report
 tags
 .nyc_output
 coverage
+app/buildInfo.js
 sessions/
 run*.sh
 app/**/__generated__

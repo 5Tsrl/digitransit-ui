@@ -121,9 +121,9 @@ const containerComponent = Relay.createContainer(RouteAlertsContainer, {
           stops {
             ${StopAlertsWithContentQuery}
           }
-          trips: tripsForDate(serviceDate: $serviceDay) {
+          trips: tripsForDate(serviceDay: $serviceDay) {
             tripHeadsign
-            stoptimes: stoptimesForDate(serviceDate: $serviceDay) {
+            stoptimes: stoptimesForDate(serviceDay: $serviceDay) {
               headsign
               realtimeState
               scheduledArrival

@@ -51,15 +51,30 @@ function DepartureTime(props, context) {
       </span>
     );
   }
+  let accessibleVeh = ''
+  if (props.accessible === 'POSSIBLE'){
+    accessibleVeh=context.intl.formatMessage({
+      id: 'accessible-vehicle',
+      defaultMessage: 'accessible vehicle',
+    })}
+    else if (props.accessible === 'NOT_POSSIBLE'){
+      accessibleVeh=context.intl.formatMessage({
+      id: 'not-accessible-vehicle',
+      defaultMessage: 'not accessible vehicle',
+    })}
+
   return (
     <React.Fragment>
       <span
+        title={accessibleVeh}
         style={props.style}
         className={cx(
           'time',
           {
             realtime: props.realtime,
             canceled: props.canceled,
+            accessible: props.accessible === 'POSSIBLE',
+            notaccessible: props.accessible === 'NOT_POSSIBLE',
           },
           props.className,
         )}
@@ -124,6 +139,7 @@ DepartureTime.propTypes = {
   realtime: PropTypes.bool,
   style: PropTypes.object,
   useUTC: PropTypes.bool,
+  accessible: PropTypes.string,
   showCancelationIcon: PropTypes.bool,
 };
 

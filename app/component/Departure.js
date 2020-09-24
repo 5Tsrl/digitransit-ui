@@ -47,6 +47,7 @@ function Departure({
           currentTime={currentTime}
           canceled={canceled}
           useUTC={useUTC}
+          accessible={departure.wheelchairAccessible}
         />
       )}
       <RouteNumberContainer

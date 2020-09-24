@@ -4,7 +4,7 @@
   justify-content: center;
   text-align: center;
   border-radius: $border-radius;
-  border: 1px solid $medium-gray;
+  border: 1px solid $gray-blue;
   cursor: pointer;
   padding: $padding-xxsmall 0;
   height: 100%;
@@ -23,7 +23,7 @@
   position: absolute;
 
   .favourite-edit-icon {
-    color: $light-gray;
+    color: $gray-blue;
     font-size: 12px;
   }
 

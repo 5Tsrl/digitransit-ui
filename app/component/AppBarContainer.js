@@ -24,7 +24,7 @@ const AppBarContainer = ({
       mobile={() => (
         <AppBarSmall
           {...args}
-          showLogo={location.pathname === homeUrl}
+          showLogo={location.pathname === homeUrl /*5t*/ || location.pathname.includes('favourites')}
           logo={logo}
           homeUrl={homeUrl}
           user={user}

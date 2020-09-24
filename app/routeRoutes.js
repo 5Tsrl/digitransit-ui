@@ -3,12 +3,7 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import Relay from 'react-relay/classic';
 
 import Error404 from './component/404';
-import {
-  PREFIX_DISRUPTION,
-  PREFIX_ROUTES,
-  PREFIX_STOPS,
-  PREFIX_TIMETABLE,
-} from './util/path';
+import { PREFIX_ROUTES } from './util/path';
 import { getDefault, ComponentLoading404Renderer } from './util/routerUtils';
 
 const RouteQueries = {
@@ -91,8 +86,8 @@ export default (
     <IndexRoute component={Error404} />
     {/* TODO: Should return list of all routes */}
     <Route path=":routeId">
-      <IndexRedirect to={PREFIX_STOPS} />
-      <Route path={PREFIX_STOPS}>
+      <IndexRedirect to="stops" />
+      <Route path="stops">
         <IndexRedirect to=":routeId%3A0%3A01" />
         {/* Redirect to first pattern of route */}
         <Route path=":patternId">
@@ -130,7 +125,7 @@ export default (
           </Route>
         </Route>
       </Route>
-      <Route path={PREFIX_TIMETABLE}>
+      <Route path="schedule">
         <IndexRedirect to=":routeId%3A0%3A01" />
         <Route
           path=":patternId"
@@ -144,7 +139,7 @@ export default (
           render={ComponentLoading404Renderer}
         />
       </Route>
-      <Route path={PREFIX_DISRUPTION}>
+      <Route path="disruptions">
         <IndexRedirect to=":routeId%3A0%3A01" />
         <Route
           path=":patternId"

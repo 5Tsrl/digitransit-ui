@@ -37,7 +37,7 @@ const StopPageActionBar = ({
         });
       }}
     />
-    <div className="print-button-container">
+  {/*<div className="print-button-container">
       {stopPDFURL && (
         <SecondaryButton
           ariaLabel="print-timetable"
@@ -68,7 +68,7 @@ const StopPageActionBar = ({
         buttonIcon="icon-icon_print"
         smallSize
       />
-    </div>
+    </div>*/}
   </div>
 );
 

@@ -1,4 +1,3 @@
-/* eslint-disable func-names */
 /* eslint-disable no-console, strict, no-unused-vars, prefer-destructuring, consistent-return */
 
 'use strict';
@@ -45,9 +44,9 @@ OICStrategy.prototype.init = function() {
 
 OICStrategy.prototype.authenticate = function(req, opts) {
   if (opts.callback) {
-    return this.callback(req);
+    return this.callback(req, opts);
   }
-  const authurl = this.createAuthUrl(req.session.ssoToken);
+  const authurl = this.createAuthUrl(req.query['sso-token']);
   this.redirect(authurl);
 };
 
@@ -57,7 +56,7 @@ OICStrategy.prototype.getUserInfo = function() {
   });
 };
 
-OICStrategy.prototype.callback = function(req) {
+OICStrategy.prototype.callback = function(req, opts) {
   return this.client
     .authorizationCallback(this.config.redirect_uri, req.query, {
       state: req.query.state,

@@ -22,10 +22,11 @@ export default class TicketSales {
     switch (type) {
       case 'Palvelupiste':
         return 'icon-icon_service-point';
-      case 'Kertalippuautomaatti':
-      case 'Monilippuautomaatti':
+      case 'HSL Automaatti MNL':
+      case 'HSL Automaatti KL':
         return 'icon-icon_ticket-machine';
       case 'Myyntipiste':
+      case 'R-kioski':
         return 'icon-icon_ticket-sales-point';
       default:
         return undefined;
@@ -70,7 +71,7 @@ export default class TicketSales {
               }
               [[feature.geom]] = feature.loadGeometry();
               // Do not show VR ticket machines and ticket offices
-              const icon = TicketSales.getIcon(feature.properties.Tyyppi);
+              const icon = TicketSales.getIcon(feature.properties.TYYPPI);
               if (icon) {
                 this.features.push(pick(feature, ['geom', 'properties']));
                 drawIcon(icon, this.tile, feature.geom, size);

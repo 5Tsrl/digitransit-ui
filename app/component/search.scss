@@ -205,7 +205,7 @@ ul.react-autowhatever__items-list {
   min-height: 2em;
   overflow-x: hidden;
 
-  &.loading:not(.CurrentLocation) {
+  /* 5t &.loading:not(.CurrentLocation) {
     // These are importatn in over to override the styling for the loading phase of the search
     svg.icon {
       stroke: $medium-gray !important;
@@ -222,7 +222,7 @@ ul.react-autowhatever__items-list {
         background: $medium-gray !important;
       }
     }
-  }
+  } */
 
   .havePosition {
     color: $current-location-color;
@@ -718,7 +718,7 @@ button.clear-input {
   font-size: 0.875rem; //for sizing the height of button
   height: 3em;
   margin-bottom: 0px;
-  color: $gray;
+  color: $light-gray;
   outline: none;
   span {
     //icon size

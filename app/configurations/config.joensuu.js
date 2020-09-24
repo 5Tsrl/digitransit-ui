@@ -5,7 +5,7 @@ const CONFIG = 'joensuu';
 const APP_TITLE = 'Joensuun reittiopas';
 const APP_DESCRIPTION = 'Joensuun uusi reittiopas';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 export default configMerger(walttiConfig, {
   CONFIG,
@@ -67,12 +67,6 @@ export default configMerger(walttiConfig, {
         nameEn: 'About this service',
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
-      },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
       },
     ],
   },

@@ -66,7 +66,7 @@ export default class Line extends React.Component {
 
     const lineConfig = this.context.config.map.line;
 
-    let color = this.props.color ? this.props.color : 'currentColor';
+    let color = /* 5t */ false && this.props.color ? this.props.color : 'currentColor';
     let haloWeight = this.props.thin
       ? lineConfig.halo.thinWeight
       : lineConfig.halo.weight;

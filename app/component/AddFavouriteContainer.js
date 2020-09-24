@@ -25,10 +25,10 @@ class AddFavouriteContainer extends React.Component {
   ];
 
   static FavouriteIconIdToNameMap = {
-    'icon-icon_home': 'home',
-    'icon-icon_work': 'work',
+    'icon-icon_home': 'casa',
+    'icon-icon_work': 'lavoro',
     'icon-icon_sport': 'sport',
-    'icon-icon_school': 'school',
+    'icon-icon_school': 'scuola',
     'icon-icon_shopping': 'shopping',
   };
 
@@ -294,7 +294,7 @@ const AddFavouriteContainerWithFavourite = connectToStores(
   (context, props) => ({
     favourite: context
       .getStore('FavouriteStore')
-      .getByFavouriteId(props.params.id),
+      .getByFavouriteId(props.params.id), // 5t era (parseInt(props.params.id, 10)
   }),
 );
 

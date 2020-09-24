@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { intlShape } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import { routerShape, locationShape } from 'react-router';
-import ExternalLink from './ExternalLink';
+import LogoLink from './LogoLink';
 import DisruptionInfo from './DisruptionInfo';
 import Icon from './Icon';
 import ComponentUsageExample from './ComponentUsageExample';
@@ -62,6 +62,12 @@ const AppBarLarge = (
           {logoElement}
         </button>
         <div className="empty-space flex-grow" />
+        <div className="btn-pulsantone right-border navi-margin">
+          <a href="https://www.muoversiatorino.it/" target="_blank" rel="noopener noreferrer" >
+            <Icon img="icon-m" className="navi-margin" />
+            <FormattedMessage id="portaleWeb" defaultMessage="Portale Web" />
+          </a>
+        </div>
         {config.showLogin &&
           (!user.name ? (
             <LoginButton />
@@ -81,7 +87,7 @@ const AppBarLarge = (
         <div className="navi-languages right-border navi-margin">
           <LangSelect />
         </div>
-        <div className="navi-icons navi-margin padding-horizontal-large">
+        {/* <div className="navi-icons navi-margin padding-horizontal-large">
           <a
             className="noborder"
             onClick={openDisruptionInfo}
@@ -92,9 +98,9 @@ const AppBarLarge = (
           >
             <Icon img="icon-icon_caution" className="caution-topbar" />
           </a>
-        </div>
+        </div> */}
         <div className="padding-horizontal-large navi-margin">
-          <ExternalLink
+          {/* <ExternalLink
             className="external-top-bar"
             {...config.appBarLink}
             onClick={() => {
@@ -104,6 +110,10 @@ const AppBarLarge = (
                 name: null,
               });
             }}
+          /> */}
+          <LogoLink
+            className="external-top-bar logo-img"
+            {...config.appBarLink}
           />
         </div>
       </div>

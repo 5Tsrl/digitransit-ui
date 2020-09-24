@@ -6,7 +6,7 @@ const APP_TITLE = 'Fölin reittiopas';
 const APP_DESCRIPTION =
   'Fölin reittiopas uudistuu. Tule mukaan! Ota uuden uuden sukupolven matkaopas käyttöösi.';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 export default configMerger(walttiConfig, {
   CONFIG,
@@ -112,12 +112,6 @@ export default configMerger(walttiConfig, {
         nameEn: 'About this service',
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
-      },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
       },
     ],
   },

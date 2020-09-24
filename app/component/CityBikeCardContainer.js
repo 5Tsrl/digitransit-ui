@@ -11,7 +11,7 @@ const CityBikeCardContainer = connectToStores(
   (context, props) => ({
     isFavourite: context
       .getStore('FavouriteCityBikeStationStore')
-      .isFavourite(props.station.stationId),
+      .isFavourite(props.station && props.station.stationId),
     toggleFavourite: e => {
       // TODO: this is bad in terms of performance, consider reselect
       e.preventDefault();

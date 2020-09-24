@@ -63,7 +63,7 @@ const TripRouteStop = props => {
         >
           <circle
             strokeWidth="2"
-            stroke={color || 'currentColor'}
+            stroke={'currentColor'}
             fill="white"
             cx="6"
             cy="13"

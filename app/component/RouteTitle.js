@@ -25,8 +25,8 @@ const RouteTitle = ({ route, breakpoint }) =>
 
 RouteTitle.propTypes = {
   route: PropTypes.shape({
-    gtfsId: PropTypes.string.isRequired,
-    mode: PropTypes.string.isRequired,
+    gtfsId: PropTypes.string,
+    mode: PropTypes.string,
     shortName: PropTypes.string,
     color: PropTypes.string,
   }),

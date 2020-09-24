@@ -373,6 +373,10 @@
         margin-top: 0;
         margin-left: 8px;
         font-size: $font-size-large;
+        //width: $font-size-large;
+        width: 26px;
+        height: $font-size-large;
+        background: #fff; //5t
       }
 
       .vehicle-number {

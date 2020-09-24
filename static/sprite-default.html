@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>mato svg sprite</title>
+  <style>
+  svg{width: 0px; height: 0px; }
+  #divicon {width: 1440px;margin:auto;}
+  #divicon div{width: 340px; height: 120px;display: inline-block;overflow-x: hidden; overflow-y: hidden;}
+  #divicon svg{width: 80px; height: 80px; vertical-align:middle; margin: 10px 20px; border: 1px solid #d6d6d6; background-color: #dfdfdf}
+  </style>
+</head>
+<body id="body" onLoad=loadSprites()>
+  <h1 style="text-align:center">mato svg sprite</h1>
+<svg >
+  <defs id="spriteDefs" />
+</svg>
+<div id=divicon></div>
+
+<script>
+function loadSprites()
+{
+  var xmlFile="assets/svg-sprite.default.svg"
+  var svgNS = 'http://www.w3.org/2000/svg';
+	var loadXML = new XMLHttpRequest;
+	loadXML.onload = callback;
+	loadXML.open("GET", xmlFile, true);
+	loadXML.send();
+	function callback()
+	{
+		//---responseText---
+		var xmlString=loadXML.responseText
+		//---DOMParser---
+		var parser = new DOMParser();
+    var mySpritesDoc=parser.parseFromString(xmlString,"text/xml").documentElement ;
+    var sprites=mySpritesDoc.childNodes
+    console.log(sprites.length);
+    var spritesNode = mySpritesDoc.childNodes[1]
+    document.getElementById("spriteDefs").appendChild(spritesNode)
+
+    for(var k=0; k<spritesNode.childNodes.length ;k++)
+    {
+       var sprite=spritesNode.childNodes.item(k).cloneNode(true);
+       if(sprite.nodeType == 1 && sprite.attributes.length > 0){
+
+         var sVG = document.createElementNS(svgNS, "svg");
+         var use = document.createElementNS(svgNS, "use");
+         use.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href', '#' + sprite.attributes.item('id').value)
+         sVG.appendChild(use)
+
+         var div = document.createElement('div');
+         var span = document.createElement('span');
+         span.innerHTML = sprite.attributes.item('id').value// + '<br>'
+         div.appendChild(sVG)
+         div.appendChild(span)
+         document.getElementById("divicon").appendChild(div)
+       }
+    }
+  }
+}
+
+</script>
+</body>
+</html>

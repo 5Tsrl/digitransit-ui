@@ -13,7 +13,7 @@ import { getJson } from './xhrPromise';
 import { distance } from './geo-utils';
 import { uniqByLabel, isStop } from './suggestionUtils';
 import mapPeliasModality from './pelias-to-modality-mapper';
-import { PREFIX_ROUTES, PREFIX_STOPS } from './path';
+import { PREFIX_ROUTES } from './path';
 
 /**
  * LayerType depicts the type of the point-of-interest.
@@ -65,8 +65,8 @@ const mapRoute = item => {
   if (item === null || item === undefined) {
     return null;
   }
-
-  const link = `/${PREFIX_ROUTES}/${item.gtfsId}/${PREFIX_STOPS}/${
+  // DT-3331: added query string sort=no
+  const link = `/${PREFIX_ROUTES}/${item.gtfsId}/stops/${
     orderBy(item.patterns, 'code', ['asc'])[0].code
   }`;
 
@@ -82,6 +82,22 @@ const mapRoute = item => {
     },
   };
 };
+
+const mapStops = stops => {
+  return stops.map(item => {
+    return {
+      type: 'Stop',
+      properties: {
+        ...item,
+        mode: item.routes.length > 0 && item.routes[0].mode.toLowerCase(),
+        layer: 'stop',
+      },
+      geometry: {
+        coordinates: [item.lon, item.lat],
+      },
+    }
+  })
+}
 
 export function routeNameCompare(a, b) {
   const a1 =
@@ -311,15 +327,9 @@ export function getGeocodingResult(
     opts = { ...opts, sources };
   }
 
-  return getJson(`${config.URL.GEOCODING_BASE_URL}/search`, opts).then(
-    response => mapPeliasModality(response.features, config),
+  return getJson(config.URL.PELIAS, opts).then(response =>
+    mapPeliasModality(response.features, config),
   );
-}
-
-export function searchPlace(ids, config) {
-  return getJson(`${config.URL.GEOCODING_BASE_URL}/place`, {
-    ids,
-  });
 }
 
 function getFavouriteRoutes(favourites, input) {
@@ -432,7 +442,7 @@ function getRoutes(input, config) {
     return Promise.resolve([]);
   }
   const number = input.match(/^\d+$/);
-  if (number && number[0].length > 3) {
+  if (number && number[0].length > 4) { // 5t era 3, le linee extra gtt sono a 4
     return Promise.resolve([]);
   }
 
@@ -446,7 +456,7 @@ function getRoutes(input, config) {
           shortName
           mode
           longName
-          patterns { 
+          patterns {
             code
           }
         }
@@ -467,6 +477,59 @@ function getRoutes(input, config) {
         .map(mapRoute)
         .filter(route => !!route)
         .sort((x, y) => routeNameCompare(x.properties, y.properties)),
+    )
+    .then(suggestions => take(suggestions, 10));
+}
+
+function getStops(input, origin) {
+  console.log('input', input)
+  console.log('origin', origin)
+  if (typeof input !== 'string' || input.trim().length === 0) {
+    return Promise.resolve([]);
+  }
+  /*const number = input.match(/^\d+$/);
+  if (number && number[0].length !== 4) {
+    return Promise.resolve([]);
+  }*/
+
+  const query = Relay.createQuery(
+    Relay.QL`
+    query stops($name: String) {
+      viewer {
+        stops(name: $name ) {
+          gtfsId
+          lat
+          lon
+          name
+          desc
+          code
+          routes { mode }
+        }
+      }
+    }`,
+    { name: input },
+  );
+
+  const refLatLng = origin.lat &&
+    origin.lon && { lat: origin.lat, lng: origin.lon };
+
+
+  return getRelayQuery(query)
+    // .then(results => {console.log('--1---', results); return results})
+    .then(data => mapStops(data[0].stops))
+    // .then(results => {console.log('--2---', results); return results})
+    .then(data => data.filter(el => el.properties.code?.includes(input)))
+    // .then(results => { console.log('--3---', results); return results })
+    .then(
+      stops =>
+        refLatLng
+          ? sortBy(stops, item =>
+              distance(refLatLng, {
+                lat: item.geometry.coordinates[1],
+                lng: item.geometry.coordinates[0],
+              }),
+            )
+          : stops,
     )
     .then(suggestions => take(suggestions, 10));
 }
@@ -640,6 +703,10 @@ export function executeSearchImmediate(
   let searchSearchesPromise;
   const endpointLayers = layers || getAllEndpointLayers();
 
+  // 5t solo numeri
+  const onlyNumbers = /^\d+$/.test(input)
+  const twoOrMoreNumbers = /^\d{2,}$/.test(input)
+
   if (type === SearchType.Endpoint || type === SearchType.All) {
     const favouriteLocations = getStore('FavouriteStore').getLocations();
     const oldSearches = getStore('OldSearchesStore').getOldSearches('endpoint');
@@ -667,8 +734,8 @@ export function executeSearchImmediate(
       }
       searchComponents.push(getOldSearches(oldSearches, input, dropLayers));
     }
-
-    if (endpointLayers.includes('Geocoding')) {
+    // 5t  !onlyNumbers  ->  non chiamare geocoding se input solo numeri, evidentemente sto cercando linee o fermate
+    if (endpointLayers.includes('Geocoding') && !onlyNumbers) {
       const focusPoint =
         config.autoSuggest.locationAware && position.hasLocation
           ? {
@@ -691,7 +758,7 @@ export function executeSearchImmediate(
         ),
       );
     }
-
+    /* 5t do not search stops with gecocker
     if (endpointLayers.includes('Stops')) {
       const focusPoint =
         config.autoSuggest.locationAware && position.hasLocation
@@ -718,7 +785,7 @@ export function executeSearchImmediate(
         );
       }
     }
-
+    */
     endpointSearchesPromise = Promise.all(searchComponents)
       .then(resultsArray => {
         if (
@@ -769,9 +836,13 @@ export function executeSearchImmediate(
       getFavouriteRoutes(favouriteRoutes, input),
       getOldSearches(oldSearches, input),
       getRoutes(input, config),
+      twoOrMoreNumbers ? getStops(input, refPoint) : Promise.resolve([]),
     ])
+      // .then(results => {console.log('1---', results); return results})
       .then(flatten)
+      // .then(results => {console.log('2---', results); return results})
       .then(uniqByLabel)
+      // .then(results => {console.log('3---', results); return results})
       .then(results => {
         searchSearches.results = results;
       })
@@ -810,7 +881,8 @@ const debouncedSearch = debounce(executeSearchImmediate, 300, {
 
 export const executeSearch = (getStore, refPoint, data, callback) => {
   callback(null); // This means 'we are searching'
-  debouncedSearch(getStore, refPoint, data, callback);
+  // 5t debouncedSearch(getStore, refPoint, data, callback);
+  executeSearchImmediate(getStore, refPoint, data, callback);
 };
 
 export const withCurrentTime = (getStore, location) => {
@@ -828,7 +900,3 @@ export const withCurrentTime = (getStore, location) => {
     },
   };
 };
-
-export function reverseGeocode(opts, config) {
-  return getJson(`${config.URL.GEOCODING_BASE_URL}/reverse`, opts);
-}

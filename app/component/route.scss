@@ -174,7 +174,7 @@ $route-schedule-date-height: 36px;
   flex: 1 0 3.5em;
   &.passed {
     div {
-      color: $gray;
+      color: #888; //5t $gray;
     }
     span {
       color: $gray;
@@ -329,7 +329,10 @@ $route-schedule-date-height: 36px;
 }
 
 .nearest-route-stop > span > svg.icon {
-  transform: translate(0px, 3px);
+  transform: translate(0px, 5px);
+  color: #2795e7;
+  width: 24px;
+  height: 24px;
 }
 
 .route-header {
@@ -630,6 +633,7 @@ $route-schedule-date-height: 36px;
     width: 7em;
     text-align: left;
     appearance: none;
+    padding-left: 8px;
 
     &:hover {
       background: none;

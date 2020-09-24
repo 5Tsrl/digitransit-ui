@@ -57,6 +57,14 @@ class SelectMapLayersDialog extends React.Component {
     this.updateSetting({ terminal });
   };
 
+  updateSharingSetting = newSetting => {
+    const sharing = {
+      ...this.props.mapLayers.sharing,
+      ...newSetting,
+    };
+    this.updateSetting({ sharing });
+  };
+
   updateTicketSalesSetting = newSetting => {
     const ticketSales = {
       ...this.props.mapLayers.ticketSales,
@@ -82,6 +90,7 @@ class SelectMapLayersDialog extends React.Component {
       ticketSales,
       geoJson,
       showAllBusses,
+      sharing, // 5t
     },
     config,
     lang,
@@ -105,6 +114,26 @@ class SelectMapLayersDialog extends React.Component {
           </div>
         )}
         <div className="checkbox-grouping">
+          {/*
+            5T: utilizzo un solo controllo per tutte le fermate del trasporto pubblico
+          */}
+          <Checkbox
+            checked={stop.bus}
+            defaultMessage="All stops"
+            labelId="map-layer-stop-all"
+            onChange={e => {
+              this.updateStopAndTerminalSetting({
+                bus: e.target.checked,
+                ferry: e.target.checked,
+                funicular: e.target.checked,
+                rail: e.target.checked,
+                subway: e.target.checked,
+                tram: e.target.checked,
+              });
+              this.sendLayerChangeAnalytic('AllStop', e.target.checked);
+            }}
+          />
+          {/*
           {isTransportModeEnabled(transportModes.bus) && (
             <React.Fragment>
               <Checkbox
@@ -116,7 +145,7 @@ class SelectMapLayersDialog extends React.Component {
                   this.sendLayerChangeAnalytic('BusStop', e.target.checked);
                 }}
               />
-              <Checkbox
+            <Checkbox
                 checked={terminal.bus}
                 defaultMessage="Bus terminal"
                 labelId="map-layer-terminal-bus"
@@ -174,8 +203,12 @@ class SelectMapLayersDialog extends React.Component {
               }}
             />
           )}
+          */}
+        </div>
+        <div className="checkbox-grouping">
           {config.cityBike &&
             config.cityBike.showCityBikes && (
+              <>
               <Checkbox
                 checked={citybike}
                 defaultMessage="Citybike station"
@@ -185,6 +218,92 @@ class SelectMapLayersDialog extends React.Component {
                   this.sendLayerChangeAnalytic('Citybike', e.target.checked);
                 }}
               />
+              <div style={{marginLeft:30}}>
+              <Checkbox
+                checked={sharing.tobike}
+                defaultMessage="Tobike"
+                labelId="map-layer-tobike"
+                onChange={e => {
+                  this.updateSharingSetting({ tobike: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-tobike', e.target.checked);
+                }}
+              />
+              <Checkbox
+                checked={sharing.helbizebike}
+                defaultMessage="Helbiz e-bikes"
+                labelId="map-layer-helbizebike"
+                onChange={e => {
+                  this.updateSharingSetting({ helbizebike: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-helbizebike', e.target.checked);
+                }}
+              />
+              <hr />
+              <Checkbox
+                checked={sharing.bird}
+                defaultMessage="Bird"
+                labelId="map-layer-bird"
+                onChange={e => {
+                  this.updateSharingSetting({ bird: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-bird', e.target.checked);
+                }}
+              />
+              <Checkbox
+                checked={sharing.bit}
+                defaultMessage="Bit Mobility"
+                labelId="map-layer-bit"
+                onChange={e => {
+                  this.updateSharingSetting({ bit: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-bit', e.target.checked);
+                }}
+              />
+              <Checkbox
+                checked={sharing.dott}
+                defaultMessage="Dott"
+                labelId="map-layer-dott"
+                onChange={e => {
+                  this.updateSharingSetting({ dott: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-dott', e.target.checked);
+                }}
+              />
+              <Checkbox
+                checked={sharing.helbiz}
+                defaultMessage="Helbiz"
+                labelId="map-layer-helbiz"
+                onChange={e => {
+                  this.updateSharingSetting({ helbiz: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-helbiz', e.target.checked);
+                }}
+              />
+              {/* <Checkbox
+                checked={sharing.hive}
+                defaultMessage="Hive"
+                labelId="map-layer-hive"
+                onChange={e => {
+                  this.updateSharingSetting({ hive: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-hive', e.target.checked);
+                }}
+              /> */}
+              <Checkbox
+                checked={sharing.lime}
+                defaultMessage="Lime"
+                labelId="map-layer-lime"
+                onChange={e => {
+                  this.updateSharingSetting({ lime: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-lime', e.target.checked);
+                }}
+              />
+              <hr />
+              <Checkbox
+                checked={sharing.bluetorino}
+                defaultMessage="Bluetorino"
+                labelId="map-layer-bluetorino"
+                onChange={e => {
+                  this.updateSharingSetting({ bluetorino: e.target.checked });
+                  this.sendLayerChangeAnalytic('sharing-bluetorino', e.target.checked);
+                }}
+              />
+              </div>
+              </>
             )}
           {config.parkAndRide &&
             config.parkAndRide.showParkAndRide && (
@@ -295,7 +414,7 @@ const mapLayersConfigShape = PropTypes.shape({
         url: PropTypes.string.isRequired,
         name: PropTypes.shape({
           en: PropTypes.string,
-          fi: PropTypes.string.isRequired,
+          it: PropTypes.string.isRequired,
           sv: PropTypes.string,
         }),
       }),
@@ -318,7 +437,7 @@ const mapLayersConfigShape = PropTypes.shape({
   mapLayers: PropTypes.shape({
     tooltip: PropTypes.shape({
       en: PropTypes.string,
-      fi: PropTypes.string.isRequired,
+      it: PropTypes.string.isRequired,
       sv: PropTypes.string,
     }),
   }),
@@ -336,7 +455,7 @@ SelectMapLayersDialog.propTypes = {
 SelectMapLayersDialog.defaultProps = {
   config: {},
   isOpen: false,
-  lang: 'fi',
+  lang: 'it',
 };
 
 SelectMapLayersDialog.description = (

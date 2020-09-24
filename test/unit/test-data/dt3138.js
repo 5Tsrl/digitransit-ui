@@ -1,8 +1,3 @@
-import {
-  PREFIX_ROUTES,
-  PREFIX_ITINERARY_SUMMARY,
-} from '../../../app/util/path';
-
 export const disruptions = [
   {
     description:
@@ -130,7 +125,7 @@ export const serviceAlerts = [
   {
     description:
       'Lähibussin 802 reitti muuttuu Laajasalossa 12.8. alkaen - Hevossalmentien lenkkiä ei ajeta.',
-    header: `Lähibussin 802 reitti muuttuu Laajasalossa 12.8. alkaen`,
+    header: 'Lähibussin 802 reitti muuttuu Laajasalossa 12.8. alkaen',
     route: {
       __dataID__: 'Um91dGU6SFNMOjE4MDI=',
       color: null,
@@ -140,7 +135,8 @@ export const serviceAlerts = [
     },
     severityLevel: 'INFO',
     stop: {},
-    url: `https://www.hsl.fi/liikennetiedotteet/2019/lahibussin-802-${PREFIX_ITINERARY_SUMMARY}-muuttuu-laajasalossa-128-alkaen-hevossalmentien`,
+    url:
+      'https://www.hsl.fi/liikennetiedotteet/2019/lahibussin-802-reitti-muuttuu-laajasalossa-128-alkaen-hevossalmentien',
     validityPeriod: {
       endTime: 1566246600,
       startTime: 1564729920,
@@ -462,7 +458,8 @@ export const serviceAlerts = [
     },
     severityLevel: 'INFO',
     stop: {},
-    url: `https://www.hsl.fi/liikennetiedotteet/2019/runkolinja-550-seka-${PREFIX_ROUTES}-41-ja-552-siirtyvat-128-poikkeusreiteille`,
+    url:
+      'https://www.hsl.fi/liikennetiedotteet/2019/runkolinja-550-seka-linjat-41-ja-552-siirtyvat-128-poikkeusreiteille',
     validityPeriod: {
       endTime: 1566592200,
       startTime: 1564246020,

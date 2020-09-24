@@ -51,6 +51,9 @@ class RealTimeInformationStore extends Store {
   }
 
   handleMessage(message) {
+    // console.log('n vehicles:', Object.entries(this.vehicles).length, Object.entries(this.vehicles)[0] ? Object.entries(this.vehicles)[0] :'');
+    // console.log('message', message)
+    // 5t qui arrivano singoli messaggi di posizione di singoli mezzi
     if (message) {
       if (Array.isArray(message)) {
         message.forEach(msg => {

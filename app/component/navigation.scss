@@ -5,9 +5,10 @@ $offcanvas-background-hover: scale-color($gray, $lightness: -30%);
 $offcanvas-background-active: scale-color($gray, $lightness: -30%);
 
 /* top bar */
-$topbar-height: 40px;
+//5t (material 56px) $topbar-height: 40px;
+$topbar-height: 48px;
+$top-navigation-icon-color: $sky-dark-blue;//5t  $primary-font-color;
 
-$top-navigation-icon-color: $primary-font-color;
 $top-navigation-title-color: $title-color;
 
 /* offcanvas */
@@ -44,7 +45,7 @@ $content-background-color: $background-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: $primary-color;
+  background:  $nav-bar-color;
   text-align: center;
   overflow: visible; // Show drawer menu
   z-index: 1008;
@@ -81,7 +82,7 @@ $content-background-color: $background-color;
     color: $top-navigation-title-color;
   }
   .logo {
-    height: 100%;
+    // 5t height: 100%;
     min-height: 40px;
     min-width: 8em;
     background-size: contain;
@@ -114,7 +115,8 @@ $content-background-color: $background-color;
 }
 
 #lang-select {
-  color: white;
+  //5t color: white;
+  color: #2795e7;
   border-bottom: 1px solid #262626;
   padding: 0px 5px;
   .lang {
@@ -137,7 +139,7 @@ $content-background-color: $background-color;
   #lang-select {
     border-bottom: 0px;
     .lang.selected {
-      background: $selected-lang-background;
+        background: rgba(0, 0, 0, 0.08);
     }
   }
 }
@@ -274,7 +276,7 @@ section.content {
     }
 
     .main-content {
-      width: 600px;
+      width: 500px;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -301,7 +303,7 @@ section.content {
     }
 
     .map-content {
-      width: calc(100% - 600px);
+      width: calc(100% - 500px);
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -500,5 +502,38 @@ section.content {
     color: $white;
     font-size: $font-size-xxsmall;
     text-decoration: none;
+  }
+}
+/* 5t pulsantone */
+.btn-pulsantone {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  color: #333;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  transition: all 0.35s ease;
+  padding: 6px 12px!important;
+  margin: 5px 20px;
+  &:hover {
+    background-color: #e5e5e5;
+    border-radius: 5px;
+    border-color: #adadad;
+  }
+  a{
+    text-decoration: none;
+  }
+  img, svg {
+    margin-right: 6px;
+    vertical-align: middle;
+    width: 28px;
+    height:28px;
   }
 }

@@ -5,7 +5,7 @@ const CONFIG = 'rovaniemi';
 const APP_TITLE = 'Rovaniemen reittiopas';
 const APP_DESCRIPTION = 'Rovaniemen uusi reittiopas';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 const minLat = 66.147037;
 const maxLat = 67.180128;
@@ -85,12 +85,6 @@ export default configMerger(walttiConfig, {
         nameEn: 'About this service',
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
-      },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
       },
     ],
   },

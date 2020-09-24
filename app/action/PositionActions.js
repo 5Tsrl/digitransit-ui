@@ -1,6 +1,6 @@
 import debounce from 'lodash/debounce';
 import d from 'debug';
-import { reverseGeocode } from '../util/searchUtils';
+import { getJson } from '../util/xhrPromise';
 import { getPositioningHasSucceeded } from '../store/localStorage';
 import geolocationMessages from '../util/geolocationMessages';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
@@ -12,16 +12,13 @@ let geoWatchId;
 function reverseGeocodeAddress(actionContext, location) {
   const language = actionContext.getStore('PreferencesStore').getLanguage();
 
-  return reverseGeocode(
-    {
-      'point.lat': location.lat,
-      'point.lon': location.lon,
-      lang: language,
-      size: 1,
-      layers: 'address',
-    },
-    actionContext.config,
-  ).then(data => {
+  return getJson(actionContext.config.URL.PELIAS_REVERSE_GEOCODER, {
+    'point.lat': location.lat,
+    'point.lon': location.lon,
+    lang: language,
+    size: 1,
+    layers: 'address',
+  }).then(data => {
     if (data.features != null && data.features.length > 0) {
       const match = data.features[0].properties;
       actionContext.dispatch('AddressFound', {

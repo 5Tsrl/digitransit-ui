@@ -3,6 +3,7 @@
 
 
 Digitransit-ui is a mobile friendly User interface built to work with Digitransit platform
+This fork is customized for Muoversi a Torino project https://www.muoversiatorino.it/POS based in Torino - Italy
 
 ## Licensing
 The source code of the platform is dual-licensed under the EUPL v1.2 and AGPLv3 licenses.

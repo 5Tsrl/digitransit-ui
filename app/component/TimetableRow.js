@@ -53,7 +53,7 @@ const TimetableRow = ({ title, stoptimes, showRoutes, timerows }) => (
 );
 
 TimetableRow.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.object.isRequired,
   stoptimes: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,

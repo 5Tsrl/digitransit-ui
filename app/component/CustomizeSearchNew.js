@@ -132,6 +132,52 @@ class CustomizeSearch extends React.Component {
             currentModes={currentSettings.modes}
           />
         </div>
+        {/* {config.cityBike.networks &&
+          Object.keys(config.cityBike.networks).length > 1 &&
+          config.transportModes.citybike &&
+          config.transportModes.citybike.availableForSelection && (
+            <>
+            <CityBikeNetworkSelector
+              headerText={intl.formatMessage({
+                id: 'citybike-network-headers',
+                defaultMessage: 'Citybikes and scooters',
+              })}
+              isUsingCitybike={currentSettings.modes.includes('CITYBIKE')}
+              currentOptions={getCitybikeNetworks(router.location, config)}
+              updateValue={value =>
+                updateCitybikeNetworks(
+                  getCitybikeNetworks(router.location, config),
+                  value.toUpperCase(),
+                  config,
+                  router,
+                  currentSettings.modes.includes('CITYBIKE'),
+                )
+              }
+            />
+            <div className="settings-option-container save-controls-container">
+              <div style={{ display: 'flex' }}>
+                <SaveCustomizedSettingsButton
+                  noSettingsFound={this.resetParameters}
+                />
+                <LoadCustomizedSettingsButton
+                  noSettingsFound={this.resetParameters}
+                />
+              </div>
+              <div>
+                <ResetCustomizedSettingsButton
+                  onReset={() => {
+                    this.resetParameters();
+                    addAnalyticsEvent({
+                      action: 'ResetSettings',
+                      category: 'ItinerarySettings',
+                      name: null,
+                    });
+                  }}
+                />
+              </div>
+            </div>
+            </>
+        )}  */}
         <div className="settings-option-container">
           {isUsingBicycle ? (
             <BikingOptionsSection
@@ -175,34 +221,12 @@ class CustomizeSearch extends React.Component {
             }}
           />
         )}
-        {config.cityBike.networks &&
-          Object.keys(config.cityBike.networks).length > 1 &&
-          config.transportModes.citybike &&
-          config.transportModes.citybike.availableForSelection && (
-            <CityBikeNetworkSelector
-              headerText={intl.formatMessage({
-                id: 'citybike-network-headers',
-                defaultMessage: 'Citybikes and scooters',
-              })}
-              isUsingCitybike={currentSettings.modes.includes('CITYBIKE')}
-              currentOptions={getCitybikeNetworks(router.location, config)}
-              updateValue={value =>
-                updateCitybikeNetworks(
-                  getCitybikeNetworks(router.location, config),
-                  value.toUpperCase(),
-                  config,
-                  router,
-                  currentSettings.modes.includes('CITYBIKE'),
-                )
-              }
-            />
-          )}
-        <PreferredRoutes
+        {/*5t <PreferredRoutes
           onRouteSelected={this.onRouteSelected}
           preferredRoutes={currentSettings.preferredRoutes}
           unPreferredRoutes={currentSettings.unpreferredRoutes}
           removeRoute={this.removeRoute}
-        />
+        />*/}
         <div className="settings-option-container">
           <RoutePreferencesSection
             optimize={currentSettings.optimize}

@@ -5,7 +5,7 @@ const CONFIG = 'lahti';
 const APP_TITLE = 'Uusi Reittiopas';
 const APP_DESCRIPTION = 'Uusi Reittiopas - Lahti';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 const minLat = 60.692506;
 const maxLat = 61.790694;
@@ -95,14 +95,55 @@ export default configMerger(walttiConfig, {
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
       },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
-      },
     ],
   },
+
+  staticMessages: [
+    {
+      id: '3',
+      priority: -1,
+      shouldTrigger: true,
+      persistence: 'repeat',
+      content: {
+        fi: [
+          {
+            type: 'text',
+            content:
+              'Koronaepidemian vuoksi reittiopas ei ole ajan tasalla. Tarkista muutokset ennen matkaa ',
+          },
+          {
+            type: 'a',
+            content: 'www.lsl.fi',
+            href: 'http://www.lsl.fi',
+          },
+        ],
+        en: [
+          {
+            type: 'text',
+            content:
+              'Due to the coronary epidemic the route guide is out of date. Please check changes before traveling ',
+          },
+          {
+            type: 'a',
+            content: 'www.lsl.fi',
+            href: 'http://www.lsl.fi',
+          },
+        ],
+        sv: [
+          {
+            type: 'text',
+            content:
+              'På grund av coronaviruset är ruttguiden inaktuell. Kontrollera innan du reser ',
+          },
+          {
+            type: 'a',
+            content: 'www.lsl.fi',
+            href: 'http://www.lsl.fi',
+          },
+        ],
+      },
+    },
+  ],
 
   aboutThisService: {
     fi: [

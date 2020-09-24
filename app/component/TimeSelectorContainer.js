@@ -42,6 +42,7 @@ class TimeSelectorContainer extends Component {
     start.seconds(this.props.time.seconds());
 
     const day = start;
+    day.locale(this.context.intl.locale);
     let value = `${day.unix()}`;
     do {
       let label;
@@ -60,7 +61,7 @@ class TimeSelectorContainer extends Component {
         ariaLabel = label;
       } else {
         ariaLabel = day.format('dddd Do MMMM ');
-        label = day.format('dd D.M.');
+        label = day.format('ddd D'); // 5t ('dd D.M')
       }
       dates.push(
         <option aria-label={ariaLabel} value={value} key={value}>

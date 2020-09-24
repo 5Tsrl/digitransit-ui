@@ -174,7 +174,6 @@ class SummaryPage extends React.Component {
       host.indexOf('127.0.0.1') === -1 &&
       host.indexOf('localhost') === -1
     ) {
-      // eslint-disable-next-line
       import('../util/feedbackly');
     }
     //  alert screen reader when search results appear
@@ -305,13 +304,14 @@ class SummaryPage extends React.Component {
       [centerPoint.lat - delta, centerPoint.lon - delta],
       [centerPoint.lat + delta, centerPoint.lon + delta],
     ];
+    const showScale = false
     return (
       <MapContainer
         className="summary-map"
         leafletObjs={leafletObjs}
         fitBounds
         bounds={bounds.length > 1 ? bounds : defaultBounds}
-        showScaleBar
+        showScaleBar={showScale}
       />
     );
   }
@@ -517,7 +517,7 @@ const containerComponent = Relay.createContainer(SummaryPageWithBreakpoint, {
           toPlace: $toPlace,
           intermediatePlaces: $intermediatePlaces,
           numItineraries: $numItineraries,
-          transportModes: $modes,
+          modes: $modes,
           date: $date,
           time: $time,
           walkReluctance: $walkReluctance,
@@ -526,7 +526,7 @@ const containerComponent = Relay.createContainer(SummaryPageWithBreakpoint, {
           walkSpeed: $walkSpeed,
           maxWalkDistance: $maxWalkDistance,
           wheelchair: $wheelchair,
-          allowedTicketTypes: $ticketTypes,
+          ticketTypes: $ticketTypes,
           disableRemainingWeightHeuristic: $disableRemainingWeightHeuristic,
           arriveBy: $arriveBy,
           transferPenalty: $transferPenalty,
@@ -608,7 +608,7 @@ const containerComponent = Relay.createContainer(SummaryPageWithBreakpoint, {
       walkSpeed: null,
       wheelchair: null,
       allowedBikeRentalNetworks: null,
-      locale: cookie.load('lang') || 'fi',
+      locale: cookie.load('lang') || 'it',
     },
     ...defaultRoutingSettings,
   },

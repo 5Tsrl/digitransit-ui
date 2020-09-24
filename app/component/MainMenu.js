@@ -43,6 +43,12 @@ function MainMenu(props, { config, intl }) {
           <FormattedMessage id="frontpage" defaultMessage="Frontpage" />
         </Link>
       </div>
+      <div className="offcanvas-section">
+        <a target="_blank" href='https://www.muoversiatorino.it'>
+          <FormattedMessage id="portaleWeb" defaultMessage="Portale Web" />
+        </a>
+      </div>
+
       {config.mainMenu.showDisruptions &&
         props.showDisruptionInfo && (
           <div className="offcanvas-section">
@@ -50,9 +56,12 @@ function MainMenu(props, { config, intl }) {
           </div>
         )}
       <MainMenuLinks
-        content={(
-          [config.appBarLink].concat(config.footer && config.footer.content) ||
-          []
+        content={((config.footer && config.footer.content)
+          .concat([
+            { label: '___________', href: 'http://www.comune.torino.it' },
+          ])
+          .concat([config.appBarLink])
+          .concat(config.footer.powered) || []
         ).filter(item => item.href || item.route)}
       />
       {config.showLogin &&

@@ -11,7 +11,7 @@ const ItineraryProfile = ({ itinerary, small }, { config, intl }) => {
   const { elevationGained, elevationLost } = itinerary;
   return (
     <div className={cx('itinerary-profile-container', { small })}>
-      {containsBiking(itinerary) &&
+      {/* 5t no dislivelli */ false && containsBiking(itinerary) &&
         Number.isFinite(elevationGained) &&
         Number.isFinite(elevationLost) && (
           <React.Fragment>

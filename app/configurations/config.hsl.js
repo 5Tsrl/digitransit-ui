@@ -288,11 +288,6 @@ export default {
         icon: 'icon-icon_info',
       },
       {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href: 'https://www.hsl.fi/saavutettavuusseloste',
-      },
-      {
         name: 'footer-link-to-privacy-policy',
         nameEn: 'Privacy policy',
         href: 'https://www.hsl.fi/tietoa-sivustosta',
@@ -476,9 +471,10 @@ export default {
     featureMapping: {
       ticketSales: {
         Palvelupiste: 'servicePoint',
-        Monilippuautomaatti: 'ticketMachine',
-        Kertalippuautomaatti: 'ticketMachine',
+        'HSL Automaatti MNL': 'ticketMachine',
+        'HSL Automaatti KL': 'ticketMachine',
         Myyntipiste: 'salesPoint',
+        'R-kioski': 'salesPoint',
       },
     },
   },
@@ -539,4 +535,13 @@ export default {
     },
   },
   showLogin: true,
+
+  /* Function that can be used to configure route names before displaying them
+     Takes routes gtfsId as input */
+  getRoutePrefix: function routePrefix(routeId) {
+    if (!routeId) {
+      return '';
+    }
+    return routeId.split(':')[1].substring(0, 1) === '7' ? 'U' : '';
+  },
 };

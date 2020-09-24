@@ -3,13 +3,12 @@ import React from 'react';
 import { Link } from 'react-router';
 import StopCardHeaderContainer from './StopCardHeaderContainer';
 import Card from './Card';
-import { PREFIX_STOPS, PREFIX_TERMINALS } from '../util/path';
 
 function StopCard(props) {
   if (!props.stop || !props.children || props.children.length === 0) {
     return false;
   }
-  const prefix = props.isTerminal ? PREFIX_TERMINALS : PREFIX_STOPS;
+  const prefix = props.isTerminal ? 'terminal' : 'stops';
 
   return (
     <Link

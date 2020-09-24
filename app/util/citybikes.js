@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 import isString from 'lodash/isString';
 import without from 'lodash/without';
 import { toggleCitybikesAndNetworks } from './modeUtils';
-import { getCustomizedSettings } from '../store/localStorage';
+import { getCustomizedSettings, getMapLayerSettings } from '../store/localStorage';
 import { replaceQueryParams } from './queryUtils';
 
 export const BIKESTATION_ON = 'Station on';
@@ -91,12 +91,19 @@ export const getCitybikeNetworks = (location, config) => {
       .split(',')
       .map(m => m.toUpperCase());
   }
-  const { allowedBikeRentalNetworks } = getCustomizedSettings();
-  if (
-    Array.isArray(allowedBikeRentalNetworks) &&
-    !isEmpty(allowedBikeRentalNetworks)
-  ) {
-    return allowedBikeRentalNetworks;
+  // const { allowedBikeRentalNetworks } = getCustomizedSettings();
+  const { sharing } = getMapLayerSettings();
+  // array delle sole network == true
+  const bikeRentalNetworksToShow = sharing ? Object.keys(sharing).filter( net => sharing[net]) : []
+
+  // if (
+  //   Array.isArray(allowedBikeRentalNetworks) &&
+  //   !isEmpty(allowedBikeRentalNetworks)
+  // ) {
+  //   return allowedBikeRentalNetworks;
+  // }
+  if (!isEmpty(bikeRentalNetworksToShow)){
+    return bikeRentalNetworksToShow;
   }
   return getDefaultNetworks(config);
 };
@@ -155,9 +162,19 @@ export const updateCitybikeNetworks = (
 };
 
 // Returns network specific url if it exists. Defaults to cityBike.useUrl
-export const getCityBikeUrl = (networks, lang, config) => {
+export const getCityBikeUrl = (networks, lang, config, station) => {
   const id = getCityBikeNetworkId(networks).toLowerCase();
 
+  if (
+    config &&
+    config.cityBike &&
+    config.cityBike.networks &&
+    config.cityBike.networks[id] &&
+    config.cityBike.networks[id].rental_uri
+  ) {
+    // console.log('DEEP LINK', config.cityBike.networks[id].rental_uri.replace('######', station.stationId.replace(/"/g, '').replace('-', '')))
+    return config.cityBike.networks[id].rental_uri.replace('######', station.stationId.replace(/"/g, '').replace('-', ''))
+  }
   if (
     config &&
     config.cityBike &&

@@ -8,8 +8,6 @@ describe('<PrintableItineraryHeader />', () => {
   const config = {
     showTicketInformation: true,
     fareMapping: fareId => fareId.replace('HSL:', ''),
-    availableTickets: { HSL: { 'HSL:A': { price: 5.5, zones: ['A'] } } },
-    feedIds: ['HSL', 'HSLlautta'],
   };
 
   it('should render as many fares as present in the itinerary', () => {

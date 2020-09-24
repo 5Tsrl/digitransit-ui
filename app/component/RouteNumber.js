@@ -12,19 +12,24 @@ const LONG_ROUTE_NUMBER_LENGTH = 5;
 
 function RouteNumber(props, context) {
   let mode = props.mode.toLowerCase();
+  // const routeName =
+  //   mode === 'bus' && props.gtfsId && context.config.getRoutePrefix
+  //     ? context.config.getRoutePrefix(props.gtfsId).concat(props.text)
+  //     : props.text;
+  const routeName = props.text;
   const { alertSeverityLevel, color } = props;
 
   if (mode === 'bicycle' || mode === 'car') {
     mode += '-withoutBox';
   }
 
-  const longText = props.text && props.text.length >= LONG_ROUTE_NUMBER_LENGTH;
+  const longText = routeName && routeName.length >= LONG_ROUTE_NUMBER_LENGTH;
   // Checks if route only has letters without identifying numbers and
   // length doesn't fit in the tab view
   const hasNoShortName =
-    props.text &&
-    new RegExp(/^([^0-9]*)$/).test(props.text) &&
-    props.text.length > 3;
+    routeName &&
+    new RegExp(/^([^0-9]*)$/).test(routeName) &&
+    routeName.length > 3;
 
   const getIcon = (icon, isCallAgency, hasDisruption, badgeFill, badgeText) => {
     if (isCallAgency) {
@@ -53,7 +58,7 @@ function RouteNumber(props, context) {
       <IconWithIcon
         badgeFill={badgeFill}
         badgeText={badgeText}
-        color={color}
+        color={ /* 5t */ '' && color}
         className={mode}
         img={icon || `icon-icon_${mode}`}
         subIcon=""
@@ -106,11 +111,11 @@ function RouteNumber(props, context) {
           </div>
         )}
       </span>
-      {props.text &&
+      {routeName &&
         (props.vertical === false ? (
           <span
             style={{
-              color: props.color ? props.color : null,
+              color: /* 5t */ false && props.color ? props.color : null,
               fontSize: longText && isMobile ? '17px' : null,
             }}
             className={cx('vehicle-number', mode, {
@@ -119,18 +124,18 @@ function RouteNumber(props, context) {
               hasNoShortName: hasNoShortName && longText && props.isRouteView,
             })}
           >
-            {props.text}
+            {routeName}
           </span>
         ) : (
           <div className="vehicle-number-container-v">
             <span
-              style={{ color: props.color ? props.color : null }}
+              style={{ color: /* 5t */ false &&  props.color ? props.color : null }}
               className={cx('vehicle-number', mode, {
                 'overflow-fade': longText && props.fadeLong,
                 long: longText,
               })}
             >
-              {props.text}
+              {routeName}
             </span>
           </div>
         ))}
@@ -210,6 +215,7 @@ RouteNumber.propTypes = {
   badgeText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   icon: PropTypes.string,
   isRouteView: PropTypes.bool,
+  gtfsId: PropTypes.string,
 };
 
 RouteNumber.defaultProps = {
@@ -225,10 +231,12 @@ RouteNumber.defaultProps = {
   isCallAgency: false,
   isRouteView: false,
   icon: undefined,
+  gtfsId: undefined,
 };
 
 RouteNumber.contextTypes = {
   intl: intlShape.isRequired,
+  config: PropTypes.object,
 };
 
 RouteNumber.displayName = 'RouteNumber';

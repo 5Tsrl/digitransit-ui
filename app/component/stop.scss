@@ -288,10 +288,10 @@
       width: 37%;
       height: 1.27em;
       line-height: 1.3em;
-      &:hover {
+      /*5t &:hover {
         color: $secondary-color;
         border-bottom: 2px none !important;
-      }
+      }*/
     }
     & svg {
       width: 1.2em;
@@ -527,6 +527,11 @@ hr.action-bar {
   display: inline-block;
   margin-right: 1.2em;
   min-width: 4.1em;
+  max-width: 6em;
+  span.route-number{
+    margin-left: 0.5em;
+    min-width: 2em;
+  }
 }
 
 .timetable-topbar {
@@ -622,12 +627,12 @@ hr.action-bar {
   cursor: pointer;
   width: 25%;
   font-size: 0.9em;
-  & span {
+  /* 5t & span {
     transition: all 0.2s ease-out;
     &:hover {
       color: $secondary-color;
     }
-  }
+  }*/
 }
 
 .showroutes-list {

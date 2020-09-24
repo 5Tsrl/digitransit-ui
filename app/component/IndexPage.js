@@ -248,12 +248,14 @@ class IndexPage extends React.Component {
         <MapWithTracking
           breakpoint={breakpoint}
           showStops
-          showScaleBar
+          showScaleBar={false}
           origin={origin}
           destination={destination}
           renderCustomButtons={() => (
             <React.Fragment>
+              {/* 5t
               {this.renderStreetModeSelector(config, router)}
+              */}
               {this.renderMapLayerSelector()}
             </React.Fragment>
           )}
@@ -262,7 +264,9 @@ class IndexPage extends React.Component {
         {!footerOptions.hidden && (
           <div id="page-footer-container">
             <PageFooter
-              content={(config.footer && config.footer.content) || []}
+              content={
+                (config.footer && config.footer.content.concat(config.footer.powered, )) || []
+              }
             />
           </div>
         )}
@@ -287,7 +291,9 @@ class IndexPage extends React.Component {
             destination={destination}
             renderCustomButtons={() => (
               <React.Fragment>
+                {/* 5t
                 {this.renderStreetModeSelector(config, router)}
+                */ }
                 {this.renderMapLayerSelector()}
               </React.Fragment>
             )}
@@ -413,7 +419,7 @@ const IndexPageWithPosition = connectToStores(
 
     if (tabs.indexOf(from) !== -1) {
       tab = from;
-      from = '-';
+      from = 'POS';
       to = '-';
       redirect = true;
     } else if (tabs.indexOf(to) !== -1) {

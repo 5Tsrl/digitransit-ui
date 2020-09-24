@@ -9,7 +9,7 @@ import { addAnalyticsEvent } from '../util/analyticsUtils';
 const EmptyFavouriteLocationSlot = ({ index }) => (
   <Link
     id={`add-new-favourite-${index}`}
-    to="/suosikki/uusi"
+    to="/favourite/new"
     className="cursor-pointer no-decoration"
     key={`add-new-favourite-${index}`}
     onClick={() => {

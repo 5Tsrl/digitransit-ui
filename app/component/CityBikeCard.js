@@ -25,9 +25,19 @@ const CityBikeCard = (
     config,
   );
 
+  // 5t
+  var networkName = getCityBikeNetworkName(networkConfig, language);
+  // if(networkConfig.type==='scooter'){
+  //   networkName = 'Monopattino ' + networkName
+  // }
+
+  // si id bit, dott(*), helbiz, helbizebikes, tobike,
+  // no id bird,  lime, Bluetorino
   const description = [
-    getCityBikeNetworkName(networkConfig, language),
-    config.cityBike.showStationId ? station.stationId : '',
+    networkConfig.type==='scooter' ? 'Monopattino ' + networkName : networkName,
+    config.cityBike.showStationId && ['Bit Mobility', 'Dott','Helbiz', 'Helbiz e-bike', 'tobike'].includes(networkName)
+      ? station.stationId
+      : '',
   ]
     .join(' ')
     .trim();

@@ -5,7 +5,7 @@ const CONFIG = 'kuopio';
 const APP_TITLE = 'Reittiopas Kuopio';
 const APP_DESCRIPTION = 'Reittiopas Kuopio';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 export default configMerger(walttiConfig, {
   CONFIG,
@@ -58,8 +58,6 @@ export default configMerger(walttiConfig, {
       : '';
   },
 
-  showTicketPrice: true,
-
   searchParams: {
     'boundary.rect.min_lat': 62.454915,
     'boundary.rect.max_lat': 63.469325,
@@ -104,38 +102,6 @@ export default configMerger(walttiConfig, {
   showAllBusses: true,
   showVehiclesOnStopPage: true,
 
-  cityBike: {
-    showCityBikes: true,
-    useSpacesAvailable: false,
-    useUrl: {
-      fi: 'https://kaupunkipyorat.kuopio.fi/',
-      sv: 'https://kaupunkipyorat.kuopio.fi/?lang=2',
-      en: 'https://kaupunkipyorat.kuopio.fi/?lang=2',
-    },
-    networks: {
-      vilkku: {
-        icon: 'citybike',
-        name: {
-          fi: 'Vilkku',
-          sv: 'Vilkku',
-          en: 'Vilkku',
-        },
-        type: 'citybike',
-        url: {
-          fi: 'https://kaupunkipyorat.kuopio.fi/',
-          sv: 'https://kaupunkipyorat.kuopio.fi/?lang=2',
-          en: 'https://kaupunkipyorat.kuopio.fi/?lang=2',
-        },
-      },
-    },
-  },
-
-  transportModes: {
-    citybike: {
-      availableForSelection: true,
-    },
-  },
-
   footer: {
     content: [
       { label: `© Kuopio ${walttiConfig.YEAR}` },
@@ -151,12 +117,6 @@ export default configMerger(walttiConfig, {
         nameEn: 'About this service',
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
-      },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
       },
     ],
   },

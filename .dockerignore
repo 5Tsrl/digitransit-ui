@@ -11,3 +11,5 @@ win-launch-scripts/
 docs/
 node_modules
 _static
+_stats.json
+test/

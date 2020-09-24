@@ -20,12 +20,11 @@ import {
   legHasCancelation,
   tripHasCancelationForStop,
 } from '../util/alertUtils';
-import { PREFIX_ROUTES, PREFIX_STOPS } from '../util/path';
+import { PREFIX_ROUTES } from '../util/path';
 import { durationToString } from '../util/timeUtils';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
 import { getZoneLabelColor } from '../util/mapIconUtils';
 import { isKeyboardSelectionEvent } from '../util/browser';
-import { shouldShowFareInfo } from '../util/fareUtils';
 import { AlertSeverityLevelType } from '../constants';
 
 class TransitLeg extends React.Component {
@@ -79,7 +78,7 @@ class TransitLeg extends React.Component {
 
         return (
           <IntermediateLeg
-            color={leg.route ? `#${leg.route.color}` : 'currentColor'}
+            color={/* 5t */ false && leg.route ? `#${leg.route.color}` : 'currentColor'}
             key={place.stop.gtfsId}
             mode={mode}
             name={place.stop.name}
@@ -141,7 +140,7 @@ class TransitLeg extends React.Component {
         <FormattedMessage
           id="number-of-intermediate-stops"
           values={{
-            number: (stops && stops.length) || 0,
+            number: stopCount,
           }}
           defaultMessage="{number, plural, =0 {No stops} one {1 stop} other {{number} stops} }"
         />
@@ -149,7 +148,7 @@ class TransitLeg extends React.Component {
 
       return (
         <div className="intermediate-stop-info-container">
-          {stopCount === 0 ? (
+          {stopCount === 1 ? (
             <span className="intermediate-stop-no-stops">{message}</span>
           ) : (
             <span
@@ -252,7 +251,7 @@ class TransitLeg extends React.Component {
               }
             }}
             to={
-              `/${PREFIX_ROUTES}/${leg.route.gtfsId}/${PREFIX_STOPS}/${
+              `/${PREFIX_ROUTES}/${leg.route.gtfsId}/stops/${
                 leg.trip.pattern.code
               }/${leg.trip.gtfsId}`
               // TODO: Create a helper function for generationg links
@@ -269,8 +268,9 @@ class TransitLeg extends React.Component {
               <RouteNumber //  shouldn't this be a route number container instead???
                 alertSeverityLevel={getActiveLegAlertSeverityLevel(leg)}
                 mode={mode.toLowerCase()}
-                color={leg.route ? `#${leg.route.color}` : 'currentColor'}
+                color={/* 5t */ false && leg.route ? `#${leg.route.color}` : 'currentColor'}
                 text={leg.route && leg.route.shortName}
+                gtfsId={leg.route.gtfsId}
                 realtime={leg.realTime}
                 vertical
                 fadeLong
@@ -282,11 +282,11 @@ class TransitLeg extends React.Component {
         <ItineraryCircleLine
           index={index}
           modeClassName={modeClassName}
-          color={leg.route ? `#${leg.route.color}` : 'currentColor'}
+          color={false && leg.route ? `#${leg.route.color}` : 'currentColor'}
         />
         <div
           style={{
-            color: leg.route ? `#${leg.route.color}` : 'currentColor',
+            color: false && leg.route ? `#${leg.route.color}` : 'currentColor',
           }}
           onClick={focusAction}
           onKeyPress={e => isKeyboardSelectionEvent(e) && focusAction(e)}
@@ -337,7 +337,7 @@ class TransitLeg extends React.Component {
           </div>
           {leg.fare &&
             leg.fare.isUnknown &&
-            shouldShowFareInfo(config) && (
+            config.showTicketInformation && (
               <div className="disclaimer-container unknown-fare-disclaimer__leg">
                 <div className="description-container">
                   <span className="accent">

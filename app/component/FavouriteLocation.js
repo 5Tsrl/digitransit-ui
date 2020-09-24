@@ -49,6 +49,7 @@ const FavouriteLocation = ({
           mode={firstTransitLeg.mode}
           realtime={firstTransitLeg.realTime}
           text={firstTransitLeg.route.shortName}
+          gtfsId={firstTransitLeg.route.gtfsId}
         />
         &nbsp;
         {departureTimeComponent}
@@ -60,8 +61,8 @@ const FavouriteLocation = ({
 
   const favouriteType =
     (isStop(favourite) || isTerminal(favourite)) && favourite.gtfsId
-      ? 'pysakki'
-      : 'sijainti';
+      ? 'stop'
+      : 'location';
   /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
   return (
     <div
@@ -84,7 +85,7 @@ const FavouriteLocation = ({
             name: null,
           });
         }}
-        to={`/suosikki/muokkaa/${favouriteType}/${favouriteId}`}
+        to={`/favourite/edit/${favouriteType}/${favouriteId}`}
         className="cursor-pointer no-decoration"
       >
         <div className="favourite-edit-icon-click-area">
@@ -114,6 +115,10 @@ FavouriteLocation.propTypes = {
   departureTime: PropTypes.number,
   currentTime: PropTypes.number,
   firstTransitLeg: PropTypes.object,
+};
+
+FavouriteLocation.contextTypes = {
+  config: PropTypes.object.isRequired,
 };
 
 FavouriteLocation.displayName = 'FavouriteLocation';

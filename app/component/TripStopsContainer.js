@@ -5,19 +5,21 @@ import some from 'lodash/some';
 import cx from 'classnames';
 import pure from 'recompose/pure';
 
-import { getStartTime } from '../util/timeUtils';
+// import { getStartTime } from '../util/timeUtils';
 import TripListHeader from './TripListHeader';
 import TripStopListContainer from './TripStopListContainer';
 import withBreakpoint from '../util/withBreakpoint';
 
 function TripStopsContainer({ breakpoint, routes, trip }) {
+  // hsl format: HHmm, we need seconds from midnight (a string)
   if (!trip) {
     return null;
   }
 
-  const tripStartTime = getStartTime(
-    trip.stoptimesForDate[0].scheduledDeparture,
-  );
+  // const tripStartTime = getStartTime(
+  //   trip.stoptimesForDate[0].scheduledDeparture,
+  // );
+  const tripStartTime = trip.stoptimesForDate[0].scheduledDeparture + '';
 
   const fullscreen = some(routes, route => route.fullscreenMap);
 

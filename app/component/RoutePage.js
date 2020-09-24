@@ -29,12 +29,7 @@ import {
   getCancelationsForStop,
   getServiceAlertsForStopRoutes,
 } from '../util/alertUtils';
-import {
-  PREFIX_DISRUPTION,
-  PREFIX_ROUTES,
-  PREFIX_STOPS,
-  PREFIX_TIMETABLE,
-} from '../util/path';
+import { PREFIX_ROUTES } from '../util/path';
 import withBreakpoint from '../util/withBreakpoint';
 import {
   RouteAlertsQuery,
@@ -43,9 +38,9 @@ import {
 import { addAnalyticsEvent } from '../util/analyticsUtils';
 
 const Tab = {
-  Disruptions: PREFIX_DISRUPTION,
-  Stops: PREFIX_STOPS,
-  Timetable: PREFIX_TIMETABLE,
+  Disruptions: 'disruptions',
+  Stops: 'stops',
+  Timetable: 'schedule',
 };
 
 const getActiveTab = pathname => {
@@ -145,7 +140,6 @@ class RoutePage extends React.Component {
     if (!realTime) {
       return;
     }
-
     const routeParts = route.gtfsId.split(':');
     const agency = routeParts[0];
     const source = realTime[agency];
@@ -164,11 +158,13 @@ class RoutePage extends React.Component {
       agency,
       options: [
         {
-          route: id,
+          // route: id, // 5t
+          route: `${agency}:${id}`,
           // add some information from the context
           // to compensate potentially missing feed data
           mode: route.mode.toLowerCase(),
-          gtfsId: routeParts[1],
+          // gtfsId: routeParts[1],
+          gtfsId: route.gtfsId,
           headsign: pattern.headsign,
         },
       ],
@@ -207,9 +203,11 @@ class RoutePage extends React.Component {
           agency,
           options: [
             {
-              route: id,
+              // route: id, // 5t
+              route: `${agency}:${id}`,
               mode: route.mode.toLowerCase(),
-              gtfsId: routeParts[1],
+              // gtfsId: routeParts[1],
+              gtfsId: route.gtfsId,
               headsign: pattern.headsign,
             },
           ],
@@ -233,13 +231,13 @@ class RoutePage extends React.Component {
     this.context.router.replace(path);
     let action;
     switch (tab) {
-      case PREFIX_TIMETABLE:
+      case 'aikataulu':
         action = 'OpenTimetableTab';
         break;
-      case PREFIX_STOPS:
+      case 'pysakit':
         action = 'OpenStopsTab';
         break;
-      case PREFIX_DISRUPTION:
+      case 'hairiot':
         action = 'OpenDisruptionsTab';
         break;
       default:
@@ -346,6 +344,7 @@ class RoutePage extends React.Component {
                 color={route.color ? `#${route.color}` : null}
                 mode={route.mode}
                 text={route.shortName}
+                gtfsId={route.gtfsId}
                 isRouteView
               />
             )}
@@ -371,6 +370,7 @@ class RoutePage extends React.Component {
                 <FormattedMessage id="timetable" defaultMessage="Timetable" />
               </div>
             </a>
+            {/*
             <a
               className={cx({
                 activeAlert: hasActiveAlert,
@@ -395,6 +395,7 @@ class RoutePage extends React.Component {
                 />
               </div>
             </a>
+            */}
             <FavouriteRouteContainer
               className="route-page-header"
               gtfsId={route.gtfsId}
@@ -441,8 +442,8 @@ const containerComponent = Relay.createContainer(withBreakpoint(RoutePage), {
           stops {
             ${StopAlertsWithContentQuery}
           }
-          trips: tripsForDate(serviceDate: $serviceDay) {
-            stoptimes: stoptimesForDate(serviceDate: $serviceDay) {
+          trips: tripsForDate(serviceDay: $serviceDay) {
+            stoptimes: stoptimesForDate(serviceDay: $serviceDay) {
               realtimeState
               scheduledArrival
               scheduledDeparture

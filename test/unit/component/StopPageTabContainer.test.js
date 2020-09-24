@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { shallowWithIntl } from '../helpers/mock-intl-enzyme';
 import { AlertSeverityLevelType } from '../../../app/constants';
 import { Component as StopPageTabContainer } from '../../../app/component/StopPageTabContainer';
-import { PREFIX_DISRUPTION } from '../../../app/util/path';
 
 describe('<StopPageTabContainer />', () => {
   it('should render the disruptions tab for stops', () => {
@@ -29,7 +28,7 @@ describe('<StopPageTabContainer />', () => {
         .find('.stop-tab-singletab')
         .at(3)
         .props().to,
-    ).to.contain(`/${PREFIX_DISRUPTION}`);
+    ).to.contain('/hairiot');
   });
 
   it('should render the disruptions tab for terminals', () => {

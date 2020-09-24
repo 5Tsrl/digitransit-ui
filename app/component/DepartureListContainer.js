@@ -13,7 +13,7 @@ import {
   patternIdPredicate,
 } from '../util/alertUtils';
 import { isBrowser } from '../util/browser';
-import { PREFIX_ROUTES, PREFIX_STOPS } from '../util/path';
+import { PREFIX_ROUTES } from '../util/path';
 import {
   stopRealTimeClient,
   startRealTimeClient,
@@ -32,8 +32,8 @@ const asDepartures = stoptimes =>
           isLastStop = stoptime.stop.id === lastStop.id;
         }
         /* OTP returns either scheduled time or realtime prediction in
-         * 'realtimeDeparture' and 'realtimeArrival' fields.
-         * EXCEPT when state is CANCELLED, then it returns -1 for realtime  */
+           * 'realtimeDeparture' and 'realtimeArrival' fields.
+           * EXCEPT when state is CANCELLED, then it returns -1 for realtime  */
         const canceled = stoptime.realtimeState === 'CANCELED';
         const arrivalTime =
           stoptime.serviceDay +
@@ -57,9 +57,10 @@ const asDepartures = stoptimes =>
           stop: stoptime.stop,
           realtime: stoptime.realtime,
           pattern,
-          headsign: stoptime.headsign,
+          headsign: stoptime.stopHeadsign,
           trip: stoptime.trip,
           pickupType: stoptime.pickupType,
+          wheelchairAccessible: stoptime.trip.wheelchairAccessible
         };
       });
 
@@ -118,6 +119,7 @@ class DepartureListContainer extends Component {
   }
 
   configClient = departures => {
+    console.log('departures', departures)
     const trips = departures
       .filter(departure => departure.realtime)
       .filter(
@@ -165,6 +167,8 @@ class DepartureListContainer extends Component {
     if (client) {
       const clientConfig = this.configClient(departures);
       if (clientConfig) {
+        console.log('clientConfig in DepartureListContainer', clientConfig) // 5t
+        console.log('changeRealTimeClientTopics in DepartureListContainer') // 5t
         this.context.executeAction(changeRealTimeClientTopics, {
           ...clientConfig,
           client,
@@ -247,9 +251,9 @@ class DepartureListContainer extends Component {
       if (this.props.routeLinks) {
         departureObjs.push(
           <Link
-            to={`/${PREFIX_ROUTES}/${
-              departure.pattern.route.gtfsId
-            }/${PREFIX_STOPS}/${departure.pattern.code}?sort=no`}
+            to={`/${PREFIX_ROUTES}/${departure.pattern.route.gtfsId}/stops/${
+              departure.pattern.code
+            }?sort=no`}
             key={id}
             onClick={() => {
               addAnalyticsEvent({
@@ -296,7 +300,7 @@ const containerComponent = Relay.createContainer(DepartureListContainer, {
           realtime
           serviceDay
           pickupType
-          headsign
+          stopHeadsign
           stop {
             id
             code
@@ -306,6 +310,7 @@ const containerComponent = Relay.createContainer(DepartureListContainer, {
             gtfsId
             directionId
             tripHeadsign
+            wheelchairAccessible #5t
             stops {
               id
             }

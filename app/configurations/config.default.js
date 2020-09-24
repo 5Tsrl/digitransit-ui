@@ -3,11 +3,12 @@ import safeJsonParse from '../util/safeJsonParser';
 
 const CONFIG = process.env.CONFIG || 'default';
 const API_URL = process.env.API_URL || 'https://dev-api.digitransit.fi';
+const GEOCODING_BASE_URL = `${API_URL}/geocoding/v1`;
 const MAP_URL =
   process.env.MAP_URL || 'https://digitransit-dev-cdn-origin.azureedge.net';
 const APP_PATH = process.env.APP_CONTEXT || '';
 const { SENTRY_DSN } = process.env;
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 const APP_DESCRIPTION = 'Digitransit journey planning UI';
 const OTP_TIMEOUT = process.env.OTP_TIMEOUT || 12000;
 const YEAR = 1900 + new Date().getYear();
@@ -33,8 +34,11 @@ export default {
     CITYBIKE_MAP: `${MAP_URL}/map/v1/finland-citybike-map/`,
     FONT:
       'https://fonts.googleapis.com/css?family=Lato:300,400,900%7CPT+Sans+Narrow:400,700',
-    GEOCODING_BASE_URL:
-      process.env.GEOCODING_BASE_URL || `${API_URL}/geocoding/v1`,
+    PELIAS: `${process.env.GEOCODING_BASE_URL || GEOCODING_BASE_URL}/search`,
+    PELIAS_REVERSE_GEOCODER: `${process.env.GEOCODING_BASE_URL ||
+      GEOCODING_BASE_URL}/reverse`,
+    PELIAS_PLACE: `${process.env.GEOCODING_BASE_URL ||
+      GEOCODING_BASE_URL}/place`,
     ROUTE_TIMETABLES: {
       HSL: `${API_URL}/timetables/v1/hsl/routes/`,
       tampere: 'http://joukkoliikenne.tampere.fi/media/aikataulut/',
@@ -133,7 +137,7 @@ export default {
       availableOptionSets: [
         'least-transfers',
         'least-walking',
-        'public-transport-with-bicycle',
+        // 5t 'public-transport-with-bicycle',
         'saved-settings',
       ],
     },
@@ -142,7 +146,7 @@ export default {
     },
     bicycle: {
       availableOptionSets: [
-        'least-elevation-changes',
+        // 5t 'least-elevation-changes',
         'prefer-greenways',
         'saved-settings',
       ],
@@ -160,19 +164,17 @@ export default {
   maxBikingDistance: 100000,
   itineraryFiltering: 1.5, // drops 66% worse routes
   useUnpreferredRoutesPenalty: 1200, // adds 10 minute (weight) penalty to routes that are unpreferred
-  availableLanguages: ['fi', 'sv', 'en', 'fr', 'nb', 'de', 'da', 'es', 'ro'],
+  availableLanguages: ['fi', 'sv', 'en', 'fr', 'nb', 'de', 'ro'],
   defaultLanguage: 'en',
-  // This timezone data will expire in 2037
+  // This timezone data will expire on 31.12.2020
   timezoneData:
-    'Europe/Helsinki|EET EEST|-20 -30|0101010101010101010101010101010101010|22k10 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|12e5',
-
-  /* Option to disable the "next" column of the Route panel as it can be confusing sometimes: https://github.com/mfdz/digitransit-ui/issues/167 */
-  displayNextDeparture: true,
+    'Europe/Helsinki|EET EEST|-20 -30|01010101010101010101010|1BWp0 1qM0 WM0 1qM0 ' +
+    'WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|35e5',
 
   mainMenu: {
     // Whether to show the left menu toggle button at all
     show: true,
-    showDisruptions: true,
+    showDisruptions: false,
     showLoginCreateAccount: true,
     showOffCanvasList: true,
   },
@@ -193,6 +195,7 @@ export default {
     // Number of days to include to the service time range from the future (DT-3317)
     serviceTimeRange: 30,
   },
+
 
   nearestStopDistance: {
     maxShownDistance: 5000,
@@ -264,7 +267,6 @@ export default {
     // When should bikeshare availability be rendered in orange rather than green
     fewAvailableCount: 3,
     networks: {},
-    useSpacesAvailable: true,
   },
 
   // Lowest level for stops and terminals are rendered
@@ -351,8 +353,8 @@ export default {
     rail: 'RAIL',
     subway: 'SUBWAY',
     citybike: 'BICYCLE_RENT',
-    airplane: 'AIRPLANE',
-    ferry: 'FERRY',
+    //airplane: 'AIRPLANE',
+    //ferry: 'FERRY',
     walk: 'WALK',
     bicycle: 'BICYCLE',
     car: 'CAR',
@@ -477,7 +479,7 @@ export default {
     },
 
     ticketOptions: {
-      available: true,
+      available: false,
     },
 
     accessibility: {
@@ -489,51 +491,11 @@ export default {
   },
 
   areaPolygon: [
-    [18.776, 60.3316],
-    [18.9625, 60.7385],
-    [19.8615, 60.8957],
-    [20.4145, 61.1942],
-    [20.4349, 61.9592],
-    [19.7853, 63.2157],
-    [20.4727, 63.6319],
-    [21.6353, 63.8559],
-    [23.4626, 64.7794],
-    [23.7244, 65.3008],
-    [23.6873, 65.8569],
-    [23.2069, 66.2701],
-    [23.4627, 66.8344],
-    [22.9291, 67.4662],
-    [23.0459, 67.9229],
-    [20.5459, 68.7605],
-    [20.0996, 69.14],
-    [21.426, 69.4835],
-    [21.9928, 69.4009],
-    [22.9226, 68.8678],
-    [23.8108, 69.0145],
-    [24.6903, 68.8614],
-    [25.2262, 69.0596],
-    [25.4029, 69.7235],
-    [26.066, 70.0559],
-    [28.2123, 70.2496],
-    [29.5813, 69.7854],
-    [29.8467, 69.49],
-    [28.9502, 68.515],
-    [30.4855, 67.6952],
-    [29.4962, 66.9232],
-    [30.5219, 65.8728],
-    [30.1543, 64.9646],
-    [30.9641, 64.1321],
-    [30.572, 63.7098],
-    [31.5491, 63.3309],
-    [31.9773, 62.9304],
-    [31.576, 62.426],
-    [27.739, 60.1117],
-    [26.0945, 59.8015],
-    [22.4235, 59.3342],
-    [20.2983, 59.2763],
-    [19.3719, 59.6858],
-    [18.7454, 60.1305],
-    [18.776, 60.3316],
+    [7.6, 45.1],
+    [7.7, 45.1],
+    [7.7, 45.0],
+    [7.6, 45.0],
+    [7.6, 45.1],
   ],
 
   // Minimun distance between from and to locations in meters. User is noticed
@@ -774,4 +736,11 @@ export default {
 
   timetables: {},
   showLogin: false,
+
+  /* Function that can be used to configure route names before displaying them
+     Takes routes gtfsId as input */
+  // eslint-disable-next-line no-unused-vars
+  getRoutePrefix: function routePrefix(routeId) {
+    return '';
+  },
 };

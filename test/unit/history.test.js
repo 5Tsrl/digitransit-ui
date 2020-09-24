@@ -5,7 +5,6 @@ import sinon from 'sinon';
 
 import createRouter, { getCreateHistoryFunction } from '../../app/history';
 import createLocalStorageHistory from '../../app/localStorageHistory';
-import { PREFIX_ITINERARY_SUMMARY } from '../../app/util/path';
 
 describe('history', () => {
   describe('getCreateHistoryFunction', () => {
@@ -36,7 +35,7 @@ describe('history', () => {
     });
 
     it('should use createHistory if in iOSApp and path is not root', () => {
-      const path = `/${PREFIX_ITINERARY_SUMMARY}/foo/bar`;
+      const path = '/reitti/foo/bar';
       const result = getCreateHistoryFunction(path, true, true);
       expect(result).to.equal(createHistory);
     });

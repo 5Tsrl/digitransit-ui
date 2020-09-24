@@ -3,19 +3,21 @@ import PropTypes from 'prop-types';
 import { setMapLayerSettings, getMapLayerSettings } from './localStorage';
 
 class MapLayerStore extends Store {
+  // 5t NB: una volta settato sul localStorage viene sovrascritto da localStorage!
   static defaultLayers = {
-    parkAndRide: true,
+    parkAndRide: false,
     stop: {
-      bus: true,
-      ferry: true,
-      rail: true,
-      subway: true,
-      tram: true,
+      bus: false,
+      ferry: false,
+      rail: false,
+      subway: false,
+      tram: false,
+      funicular: false,
     },
     terminal: {
-      bus: true,
-      rail: true,
-      subway: true,
+      bus: false,
+      rail: false,
+      subway: false,
     },
     ticketSales: {
       salesPoint: true,
@@ -24,6 +26,17 @@ class MapLayerStore extends Store {
     },
     showAllBusses: false,
     geoJson: {},
+    sharing: {
+      tobike: false,
+      bird: false,
+      bit: false,
+      dott: false,
+      helbiz: false,
+      helbizebike: false,
+      hive: false,
+      lime: false,
+      bluetorino: false,
+    }
   };
 
   static handlers = {
@@ -40,7 +53,7 @@ class MapLayerStore extends Store {
     const { config } = dispatcher.getContext();
     this.mapLayers.citybike =
       config.transportModes.citybike &&
-      config.transportModes.citybike.availableForSelection;
+      config.transportModes.citybike.defaultValue;
 
     const storedMapLayers = getMapLayerSettings();
     if (Object.keys(storedMapLayers).length > 0) {
@@ -72,6 +85,7 @@ export const mapLayerShape = PropTypes.shape({
     rail: PropTypes.bool,
     subway: PropTypes.bool,
     tram: PropTypes.bool,
+    funicular: PropTypes.bool,
   }).isRequired,
   terminal: PropTypes.shape({
     bus: PropTypes.bool,

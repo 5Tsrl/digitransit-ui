@@ -37,6 +37,12 @@ $cancelation-background: #fbe0ea;
 $disruption-color: $cancelation-red;
 $realtime-color: #3f8600;
 $visited-link-color: #8c4799;
+/* added by 5t*/
+$accessible-color: #8c4799;
+$accessible-icon-color:  #1259a7;
+$nav-logo-mobile: '';
+$nav-bar-color:'#eee';
+$medium-gray: #bbb;
 $current-location-color: $primary-color;
 $desktop-title-color: $primary-color;
 $desktop-title-arrow-icon-color: $secondary-color;
@@ -49,18 +55,22 @@ $standalone-btn-active-color: $gray-blue-light;
 $viewpoint-marker-color: $livi-blue;
 $link-color: $action-color;
 $from-color: #64be14;
-$to-color: #ec5188;
-$slider-warning-color: #fc7c08;
-$slider-ok-color: #55b511;
+$to-color: #f092cd;
+$slider-warning-color: #FC7C08;
+$slider-ok-color: #55B511;
+$very-light-gray: #fcfcfc;
+$light-gray: #ddd;
 $selected-lang-background: rgba(0, 0, 0, 0.15);
 $caution-icon-color: $white;
 $caution-icon-font-color: none;
+
 
 /* Vehicle palette */
 $airplane-color: $livi-airplane-blue;
 $bus-color: $livi-bus-blue;
 $tram-color: $livi-tram-green;
 $metro-color: $livi-subway-orange;
+$funicular-color: #888;
 $rail-color: $livi-rail-purple;
 $ferry-color: $livi-ferry-blue;
 $citybike-color: #f2b62d;

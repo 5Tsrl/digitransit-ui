@@ -5,7 +5,7 @@ const CONFIG = 'salo';
 const APP_TITLE = 'Salon Reittiopas';
 const APP_DESCRIPTION = 'Salon Uusi Reittiopas';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 const minLat = 59.9988816059;
 const maxLat = 60.5893601259;
@@ -84,12 +84,6 @@ export default configMerger(walttiConfig, {
         nameEn: 'About this service',
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
-      },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
       },
     ],
   },

@@ -17,7 +17,7 @@ const getText = (route, config) => {
 };
 
 const RouteNumberContainer = (
-  { alertSeverityLevel, className, route, isCallAgency, ...props },
+  { alertSeverityLevel, className, route, isCallAgency, trip, ...props },
   { config },
 ) =>
   route && (
@@ -25,9 +25,16 @@ const RouteNumberContainer = (
       alertSeverityLevel={alertSeverityLevel}
       className={className}
       isCallAgency={isCallAgency || route.type === 715}
-      color={route.color ? `#${route.color}` : null}
+      color={/* 5t */ false && route.color ? `#${route.color}` : null}
       mode={route.mode}
       text={getText(route, config)}
+      gtfsId={
+        route.gtfsId
+          ? route.gtfsId
+          : trip && trip.pattern
+            ? trip.pattern.code
+            : ''
+      }
       {...props}
     />
   );
@@ -38,6 +45,7 @@ RouteNumberContainer.propTypes = {
   vertical: PropTypes.bool,
   className: PropTypes.string,
   fadeLong: PropTypes.bool,
+  trip: PropTypes.object,
 };
 
 RouteNumberContainer.defaultProps = {

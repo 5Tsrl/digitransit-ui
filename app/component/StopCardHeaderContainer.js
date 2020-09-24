@@ -19,6 +19,7 @@ export default Relay.createContainer(
         name
         code
         desc
+        wheelchairBoarding
         zoneId
         ${StopAlertsQuery}
       }

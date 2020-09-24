@@ -83,10 +83,15 @@ class TripStopListContainer extends React.PureComponent {
     const mode = trip.route.mode.toLowerCase();
 
     const vehicles = groupBy(
-      values(propVehicles).filter(
-        vehicle => currentTime - vehicle.timestamp * 1000 < 5 * 60 * 1000,
-      ),
-      vehicle => vehicle.next_stop,
+      values(propVehicles)
+        .filter(vehicle => (this.props.currentTime - (vehicle.timestamp * 1000)) < (5 * 60 * 1000)) //5t veicoli vivi da 5 minuti
+        //.filter(vehicle => vehicle.tripStartTime && vehicle.tripStartTime !== 'undefined') //che hanno uno tripStartTime
+      , vehicle => vehicle.direction,
+    );
+
+    const vehicleStops = groupBy(
+      vehicles[trip.pattern.directionId],
+      vehicle => `${vehicle.next_stop}`,
     );
 
     const matchingVehicles = Object.keys(propVehicles)
@@ -121,7 +126,6 @@ class TripStopListContainer extends React.PureComponent {
       ) {
         stopPassed = false;
       }
-
       return (
         <TripRouteStop
           key={stoptime.stop.gtfsId}
@@ -129,7 +133,7 @@ class TripStopListContainer extends React.PureComponent {
           stop={stoptime.stop}
           mode={mode}
           color={trip.route && trip.route.color ? `#${trip.route.color}` : null}
-          vehicles={vehicles[stoptime.stop.gtfsId]}
+          vehicles={vehicleStops[stoptime.stop.gtfsId]}
           selectedVehicle={vehicle}
           stopPassed={stopPassed}
           realtime={stoptime.realtime}

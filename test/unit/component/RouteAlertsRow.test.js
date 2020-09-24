@@ -6,7 +6,6 @@ import RouteAlertsRow from '../../../app/component/RouteAlertsRow';
 import RouteNumber from '../../../app/component/RouteNumber';
 import ServiceAlertIcon from '../../../app/component/ServiceAlertIcon';
 import { AlertSeverityLevelType } from '../../../app/constants';
-import { PREFIX_STOPS, PREFIX_ROUTES } from '../../../app/util/path';
 
 describe('<RouteAlertsRow />', () => {
   it('should not render a div for the routeLine if it is missing', () => {
@@ -107,7 +106,7 @@ describe('<RouteAlertsRow />', () => {
     };
     const wrapper = shallowWithIntl(<RouteAlertsRow {...props} />);
     expect(wrapper.find('.route-alert-row-link').get(0).props.to).to.equal(
-      `/${PREFIX_ROUTES}/HSL:2097N/${PREFIX_STOPS}/HSL:2097N:0:01`,
+      '/linjat/HSL:2097N/pysakit/HSL:2097N:0:01',
     );
   });
 

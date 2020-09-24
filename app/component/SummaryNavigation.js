@@ -9,7 +9,7 @@ import QuickSettingsPanel from './QuickSettingsPanel';
 import StreetModeSelectorPanel from './StreetModeSelectorPanel';
 import { getDrawerWidth, isBrowser } from '../util/browser';
 import * as ModeUtils from '../util/modeUtils';
-import { parseLocation, PREFIX_ITINERARY_SUMMARY } from '../util/path';
+import { parseLocation } from '../util/path';
 import withBreakpoint from '../util/withBreakpoint';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
 
@@ -51,7 +51,7 @@ class SummaryNavigation extends React.Component {
         this.context.location.state.customizeSearchOffcanvas &&
         (!location.state || !location.state.customizeSearchOffcanvas) &&
         !this.transitionDone &&
-        location.pathname.startsWith(`/${PREFIX_ITINERARY_SUMMARY}/`)
+        location.pathname.startsWith('/plan/')
       ) {
         this.transitionDone = true;
         const newLocation = {

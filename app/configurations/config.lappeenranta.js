@@ -5,7 +5,7 @@ const CONFIG = 'lappeenranta';
 const APP_TITLE = 'reittiopas.lappeenranta.fi';
 const APP_DESCRIPTION = '';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 export default configMerger(walttiConfig, {
   CONFIG,
@@ -13,7 +13,7 @@ export default configMerger(walttiConfig, {
   appBarLink: { name: 'Lappeenranta', href: 'http://www.lappeenranta.fi/' },
 
   colors: {
-    primary: '#ea4097',
+    primary: '#7AB92A',
   },
 
   socialMedia: {
@@ -23,9 +23,7 @@ export default configMerger(walttiConfig, {
 
   title: APP_TITLE,
 
-  textLogo: false, // title text instead of logo img
-
-  logo: 'lappeenranta/logo.png',
+  textLogo: true, // title text instead of logo img
 
   favicon: './app/configurations/images/lappeenranta/bussi_fin.jpeg',
 
@@ -93,12 +91,6 @@ export default configMerger(walttiConfig, {
         nameEn: 'About this service',
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
-      },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
       },
     ],
   },

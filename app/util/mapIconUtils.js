@@ -31,6 +31,7 @@ export const getHubRadius = memoize(
   }),
 );
 
+export const getColor = memoize(selector => getStyleOrDefault(selector).color);
 export const getMapIconScale = memoize(
   glfun({
     base: 1,
@@ -43,16 +44,15 @@ const getStyleOrDefault = (selector, defaultValue = {}) => {
   return (cssRule && cssRule.style) || defaultValue;
 };
 
-export const getColor = memoize(selector => getStyleOrDefault(selector).color);
 
 export const getFill = memoize(selector => getStyleOrDefault(selector).fill);
 
 export const getModeColor = mode => getColor(`.${mode}`);
 
 function getImageFromSpriteSync(icon, width, height, fill) {
-  if (!document) {
-    return null;
-  }
+  // console.log('IN getImageFromSpriteSync', icon, width, height, fill);//becco uno strano icon icon-icon_subway,rail o viceversa...
+  if(icon === 'icon-icon_subway,rail' || icon === 'icon-icon_rail,subway') icon = 'icon-icon_rail'
+  if (!document) { return null; }
   const symbol = document.getElementById(icon);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('width', width);
@@ -124,6 +124,10 @@ function drawIconImageBadge(
 
 /* eslint-disable no-param-reassign */
 export function drawRoundIcon(tile, geom, type, customScale, platformNumber) {
+  // 5t  metodo chiamato per le fermate a qualsiai livello di z, per bikeshare a basso livello
+  // console.log(type);
+
+  // type = BUS, TRAM, SUBWAY, RAIL, citybike, citybike-off   funicular non arriva:-(  mistotram intercettato prima 'BUS, TRAM', 'TRAM, BUS',
   const scale = customScale || 1;
   const caseRadius = getCaseRadius(tile.coords.z) * scale;
   const stopRadius = getStopRadius(tile.coords.z) * scale;
@@ -347,6 +351,36 @@ export function drawAvailabilityValue(
   tile.ctx.font = `${0.7 * badgeSize}px
     Gotham XNarrow SSm A, Gotham XNarrow SSm B, Arial, sans-serif`;
   tile.ctx.fillStyle = '#fff';
+  tile.ctx.textAlign = 'center';
+  tile.ctx.textBaseline = 'middle';
+  tile.ctx.fillText(value, x, y);
+}
+/* eslint-disable no-param-reassign */
+export function drawColoredBadge(
+  tile,
+  geom,
+  value,
+  imageSize,
+  badgeSize,
+  scaleratio,
+  brandColor,
+  brandTextColor = '#000',
+) {
+  const radius = badgeSize / 2;
+  const x =
+    calculateIconBadgePosition(geom.x, tile, imageSize, radius, scaleratio) + 4;
+  const y =
+    calculateIconBadgePosition(geom.y, tile, imageSize, radius, scaleratio) + 10;
+
+  tile.ctx.beginPath();
+  tile.ctx.fillStyle = brandColor;
+  tile.ctx.arc(x, y, radius, 0, FULL_CIRCLE);
+  tile.ctx.fill();
+
+  tile.ctx.font = `${0.7 * badgeSize}px
+    Gotham XNarrow SSm A, Gotham XNarrow SSm B, Arial, sans-serif`;
+  // tile.ctx.fillStyle = '#000';
+  tile.ctx.fillStyle = brandTextColor;
   tile.ctx.textAlign = 'center';
   tile.ctx.textBaseline = 'middle';
   tile.ctx.fillText(value, x, y);

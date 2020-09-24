@@ -47,7 +47,7 @@ export default config => {
   return (
     <Route component={TopLevel}>
       <Route
-        path="/styleguide"
+        path="/styleguide5t"
         getComponent={(location, cb) => {
           import(/* webpackChunkName: "styleguide" */ './component/StyleGuidePage')
             .then(loadRoute(cb))
@@ -55,7 +55,7 @@ export default config => {
         }}
       />
       <Route
-        path="/styleguide/component/:componentName"
+        path="/styleguide5t/component/:componentName"
         topBarOptions={{ hidden: true }}
         getComponent={(location, cb) => {
           import(/* webpackChunkName: "styleguide" */ './component/StyleGuidePage')
@@ -64,7 +64,7 @@ export default config => {
         }}
       />
       <Route
-        path="/suosikki/uusi"
+        path="/favourite/new"
         getComponent={(location, cb) => {
           import(/* webpackChunkName: "add-favourite" */ './component/AddFavouritePage')
             .then(loadRoute(cb))
@@ -96,7 +96,7 @@ export default config => {
         render={{ content: SummaryPageWrapper }}
       >
         <Route
-          path=":hash/tulosta"
+          path=":hash/print"
           getComponents={(location, cb) => {
             import(/* webpackChunkName: "itinerary" */ './component/PrintableItinerary')
               .then(content => cb(null, { content: content.default }))
@@ -119,11 +119,11 @@ export default config => {
             ]).then(([content, map]) => cb(null, { content, map }));
           }}
         >
-          <Route path="kartta" fullscreenMap />
+          <Route path="map" fullscreenMap />
         </Route>
       </Route>
       <Route
-        path="/suosikki/muokkaa/sijainti/:id"
+        path="/favourite/edit/location/:id"
         getComponent={(location, cb) => {
           import(/* webpackChunkName: "add-favourite" */ './component/AddFavouritePage')
             .then(loadRoute(cb))
@@ -131,7 +131,7 @@ export default config => {
         }}
       />
       <Route
-        path="/suosikki/muokkaa/pysakki/:id"
+        path="/favourite/edit/stop/:id"
         getComponent={(location, cb) => {
           import(/* webpackChunkName: "add-favourite" */ './component/AddFavouritePage')
             .then(loadRoute(cb))
@@ -139,7 +139,7 @@ export default config => {
         }}
       />
       <Route
-        path="/tietoja-palvelusta"
+        path="/info-service"
         getComponents={(location, cb) => {
           Promise.all([
             Promise.resolve(Title),
@@ -159,9 +159,10 @@ export default config => {
           }}
         />
       )}
-      <Route path="/js/*" component={Error404} />
-      <Route path="/css/*" component={Error404} />
-      <Route path="/assets/*" component={Error404} />
+      <Route path="/js/:name" component={Error404} />
+      <Route path="/css/:name" component={Error404} />
+      <Route path="/assets/:name" component={Error404} />
+      {/* qui match /ipsum -> IndexPage  */}
       <Route
         path="/(:from)(/:to)(/:tab)"
         topBarOptions={{ disableBackButton: true }}

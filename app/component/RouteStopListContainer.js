@@ -54,18 +54,20 @@ class RouteStopListContainer extends React.PureComponent {
         ? getDistanceToNearestStop(position.lat, position.lon, stops)
         : null;
     const mode = this.props.pattern.route.mode.toLowerCase();
-
     const vehicles = groupBy(
-      values(this.props.vehicles).filter(
-        vehicle =>
-          this.props.currentTime - vehicle.timestamp * 1000 < 5 * 60 * 1000,
-      ),
-      vehicle => vehicle.next_stop,
+      values(this.props.vehicles)
+        .filter(vehicle => (this.props.currentTime - (vehicle.timestamp * 1000)) < (5 * 60 * 1000)) //5t veicoli vivi da 5 minuti
+        //.filter(vehicle => vehicle.tripStartTime && vehicle.tripStartTime !== 'undefined') //che hanno uno tripStartTime
+      , vehicle => vehicle.direction);   //raggruppati per direzione!
+
+    const vehicleStops = groupBy(vehicles[this.props.pattern.directionId], vehicle =>
+      `${vehicle.next_stop}`,
     );
 
     const rowClassName = `bp-${this.props.breakpoint}`;
 
     return stops.map((stop, i) => {
+
       const idx = i; // DT-3159: using in key of RouteStop component
       const isNearest =
         (nearest &&
@@ -73,6 +75,8 @@ class RouteStopListContainer extends React.PureComponent {
             this.context.config.nearestStopDistance.maxShownDistance &&
           nearest.stop.gtfsId) === stop.gtfsId;
 
+//5t vehicles={vehicleStops[stop.gtfsId]}
+//5t poi vehicle={ vehicleStops[stop.gtfsId] ? vehicleStops[stop.gtfsId][0] : null
       return (
         <RouteStop
           color={
@@ -83,14 +87,15 @@ class RouteStopListContainer extends React.PureComponent {
           key={`${stop.gtfsId}-${this.props.pattern}-${idx}`} // DT-3159: added -${idx}
           stop={stop}
           mode={mode}
-          vehicle={vehicles[stop.gtfsId] ? vehicles[stop.gtfsId][0] : null}
+          vehicle={
+            vehicleStops[stop.gtfsId] ? vehicleStops[stop.gtfsId][0] : null
+          }
           distance={isNearest ? nearest.distance : null}
           ref={isNearest ? this.setNearestStop : null}
           currentTime={this.props.currentTime.unix()}
           last={i === stops.length - 1}
           first={i === 0}
           className={rowClassName}
-          displayNextDeparture={this.context.config.displayNextDeparture}
         />
       );
     });

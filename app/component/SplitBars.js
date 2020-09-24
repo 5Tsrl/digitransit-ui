@@ -4,9 +4,9 @@ import ComponentUsageExample from './ComponentUsageExample';
 
 const SplitBars = ({ children }) => {
   let splits = [];
-  children.forEach(child => {
-    splits.push(<div className="split-bar">{child}</div>);
-    splits.push(<div className="split-bar--bar" />);
+  children.forEach((child, index) => {
+    splits.push(<div className="split-bar" key={'sb'+index}>{child}</div>);
+    splits.push(<div className="split-bar--bar"  key={'sbb'+index}/>);
   });
   splits = splits.splice(0, splits.length - 1);
   return <div className="split-bars">{splits}</div>;

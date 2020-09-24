@@ -44,7 +44,7 @@ function DateSelect(props, context) {
 
   return (
     <div className="route-schedule-date">
-      <Icon img="icon-icon_time" />
+      <Icon img="icon-icon_calendar" />
       <select value={props.selectedDate} onChange={props.onDateChange}>
         {dates}
       </select>

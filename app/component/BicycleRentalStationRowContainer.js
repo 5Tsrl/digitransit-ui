@@ -22,7 +22,8 @@ const BicycleRentalStationRow = ({ distance, station }, { config, intl }) => {
 
   if (station.state !== BIKESTATION_ON) {
     availabilityIcon = <Icon img="icon-icon_not-in-use" />;
-  } else if (station.bikesAvailable > config.cityBike.fewAvailableCount) {
+    // 5t se non è tobike(è freefloating), disponibile per definizione
+  } else if (station.bikesAvailable > config.cityBike.fewAvailableCount || !station.networks.includes('tobike')) {
     availabilityIcon = <Icon img="icon-icon_good-availability" />;
   } else if (station.bikesAvailable > 0) {
     availabilityIcon = <Icon img="icon-icon_poor-availability" />;
@@ -34,9 +35,9 @@ const BicycleRentalStationRow = ({ distance, station }, { config, intl }) => {
     getCityBikeNetworkId(station.networks),
     config,
   );
+  // console.log('networkConfig', networkConfig)
   const networkIcon = getCityBikeNetworkIcon(networkConfig);
   const isOff = station.state !== BIKESTATION_ON;
-
   return (
     <tr className="next-departure-row-tr">
       <td className="td-distance">
@@ -46,40 +47,45 @@ const BicycleRentalStationRow = ({ distance, station }, { config, intl }) => {
         <RouteNumber
           icon={isOff ? `${networkIcon}_off` : networkIcon}
           mode={isOff ? 'citybike_off' : 'citybike'}
-          text={station.stationId}
+          text={''/*station.stationId*/}
         />
       </td>
       <td className="td-bikestation" colSpan="1">
         <span className="city-bike-station-name overflow-fade">
-          {station.name}
+          {/* 5t station.name*/}
+          {station.networks.includes('tobike')
+            ? `Stazione TO[Bike] ${station.name}`
+            : station.networks.includes('bluetorino')
+              ? `Stazione Bluetorino ${station.name}`
+              : intl.formatMessage(
+                  {
+                    id: `${networkConfig.type}-availability-short`,
+                    defaultMessage: 'Bikes',
+                  },
+                  {
+                    network: networkConfig.name.it, // station.networks[0],
+                  }
+                )
+          }
         </span>
       </td>
-      <td className="td-available-bikes" colSpan="2">
+      <td className="td-available-bikes" >
         <span className="city-bike-station-availability">
           <span className="bikes-label">
-            {intl.formatMessage({
-              id: `${
-                networkConfig.type === CityBikeNetworkType.CityBike
-                  ? 'bike'
-                  : 'scooter'
-              }-availability-short`,
-              defaultMessage: 'Bikes',
-            })}
           </span>
         </span>
-        <span className="city-bike-station-availability">
+        {(station.networks.includes('tobike') || station.networks.includes('bluetorino')) &&
+        <span>
           <span className="bikes-available">{station.bikesAvailable}</span>
-          {config.cityBike.useSpacesAvailable && (
-            <React.Fragment>
-              /
-              <span className="bikes-total">
-                {station.bikesAvailable + station.spacesAvailable}
-              </span>
-            </React.Fragment>
-          )}
+          /
+          <span className="bikes-total">
+            {station.bikesAvailable + station.spacesAvailable}
+          </span>
         </span>
-        {availabilityIcon}
+        }
+
       </td>
+      <td style={{textAlign: 'center'}}>{availabilityIcon}</td>
     </tr>
   );
 };

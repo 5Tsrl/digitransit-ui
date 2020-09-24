@@ -82,9 +82,9 @@ const connectedComponent = Relay.createContainer(
       fragment on Stop {
         url
         stoptimes: stoptimesWithoutPatterns(
-          startTime: $startTime, 
-          timeRange: $timeRange, 
-          numberOfDepartures: $numberOfDepartures, 
+          startTime: $startTime,
+          timeRange: $timeRange,
+          numberOfDepartures: $numberOfDepartures,
           omitCanceled: false
         ) {
           ${DepartureListContainer.getFragment('stoptimes')}

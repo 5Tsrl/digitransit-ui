@@ -7,13 +7,14 @@ import {
   BIKESTATION_ON,
   getCityBikeUrl,
   getCityBikeType,
+  getCityBikeNetworkId,
 } from '../util/citybikes';
 import ComponentUsageExample from './ComponentUsageExample';
 import { station as exampleStation, lang as exampleLang } from './ExampleData';
 
 const CityBikeContent = ({ station, lang }, { config }) => (
   <div className="city-bike-container">
-    {station.state !== BIKESTATION_ON ? (
+    {/*station.state !== BIKESTATION_ON ? (
       <p className="sub-header-h4 availability-header">
         <FormattedMessage
           id="citybike_off"
@@ -26,14 +27,31 @@ const CityBikeContent = ({ station, lang }, { config }) => (
         totalSpaces={station.bikesAvailable + station.spacesAvailable}
         fewAvailableCount={config.cityBike.fewAvailableCount}
         type={getCityBikeType(station.networks, config)}
-        useSpacesAvailable={config.cityBike.useSpacesAvailable}
       />
-    )}
+    )*/}
+    {station.state !== BIKESTATION_ON &&
+    <p className="sub-header-h4 availability-header">
+      <FormattedMessage
+        id="citybike_off"
+        defaultMessage="Bike station closed"
+      />
+    </p>}
+    {(station.networks[0] === 'tobike' || station.networks[0] === 'bluetorino') &&
+      <CityBikeAvailability
+      bikesAvailable={station.bikesAvailable}
+      totalSpaces={station.bikesAvailable + station.spacesAvailable}
+      fewAvailableCount={config.cityBike.fewAvailableCount}
+      type={getCityBikeType(station.networks, config)}
+    />
+    }
     {config.transportModes.citybike.availableForSelection &&
-      getCityBikeUrl(station.networks, lang, config) && (
+      getCityBikeUrl(station.networks, lang, config, station) && (
         <CityBikeUse
-          url={getCityBikeUrl(station.networks, lang, config)}
+          url={getCityBikeUrl(station.networks, lang, config, station)}
           type={getCityBikeType(station.networks, config)}
+        logo={getCityBikeNetworkId(station.networks) === 'tobike' ? 'tobike-logo'
+                : getCityBikeNetworkId(station.networks) === 'bluetorino' ? 'bluetorino-logo'
+                  : getCityBikeNetworkId(station.networks)}
         />
       )}
     {!config.transportModes.citybike.availableForSelection && (

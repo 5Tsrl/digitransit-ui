@@ -280,9 +280,9 @@ const connectedComponent = connectToStores(
             gtfsId
             shortName
           }
-          tripsForDate(serviceDate: $serviceDay) {
+          tripsForDate(serviceDay: $serviceDay) {
             id
-            stoptimes: stoptimesForDate(serviceDate: $serviceDay) {
+            stoptimes: stoptimesForDate(serviceDay: $serviceDay) {
               realtimeState
               scheduledArrival
               scheduledDeparture

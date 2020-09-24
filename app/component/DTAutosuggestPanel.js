@@ -133,7 +133,7 @@ class DTAutosuggestPanel extends React.Component {
 
   value = location =>
     (location && location.address) ||
-    (location && location.gps && location.ready && 'Nykyinen sijainti') ||
+    (location && location.gps && location.ready && 'Posizione corrente') ||
     '';
 
   class = location =>

@@ -205,7 +205,8 @@ class Stops {
                   f.properties.type &&
                 f.geom.x === featureByCode[f.properties.code].geom.x &&
                 f.geom.y === featureByCode[f.properties.code].geom.y;
-              this.fetchStatusAndDrawStop(f, large);
+              // 5t non abiamo ancora alerts this.fetchStatusAndDrawStop(f, large);
+              this.drawStop(f, large);
             });
           }
           if (

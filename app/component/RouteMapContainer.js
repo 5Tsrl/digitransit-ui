@@ -171,7 +171,6 @@ export const RouteMapFragments = {
         scheduledDeparture
       }
       gtfsId
-      directionId
     }
   `,
 };
@@ -181,34 +180,28 @@ const RouteMapContainerWithVehicles = connectToStores(
   ['RealTimeInformationStore'],
   ({ getStore }, { trip }) => {
     if (trip) {
+      // 5t -  hsl format: HHmm, we need seconds from midnight (a string)
+      // const tripStart = getStartTime(
+      //   trip.stoptimesForDate[0].scheduledDeparture,
+      // );
+      const tripStart = trip.stoptimesForDate[0].scheduledDeparture + '';
       const { vehicles } = getStore('RealTimeInformationStore');
-      const tripStart = getStartTime(
-        trip.stoptimesForDate[0].scheduledDeparture,
-      );
       const matchingVehicles = Object.keys(vehicles)
         .map(key => vehicles[key])
         .filter(
           vehicle =>
             vehicle.tripStartTime === undefined ||
-            vehicle.tripStartTime === tripStart,
+            vehicle.tripStartTime * 60 + '' === tripStart,
         )
         .filter(
           vehicle =>
             vehicle.tripId === undefined || vehicle.tripId === trip.gtfsId,
-        )
-        .filter(
-          vehicle =>
-            vehicle.direction === undefined ||
-            vehicle.direction === Number(trip.directionId),
         );
 
-      if (matchingVehicles.length !== 1) {
-        // no matching vehicles or cant distinguish between vehicles
-        return { lat: null, lon: null };
-      }
-      const selectedVehicle = matchingVehicles[0];
+      const selectedVehicle =
+        matchingVehicles && matchingVehicles.length > 0 && matchingVehicles[0];
 
-      return { lat: selectedVehicle.lat, lon: selectedVehicle.long };
+      return { lat: selectedVehicle.lat, lon: selectedVehicle.long, tripStart };
     }
     return null;
   },

@@ -417,7 +417,7 @@ function getIcons() {
         <Icon className="large-icon" img="icon-icon_subway-live" />
         <span className="code">.large-icon</span>
         <br />
-        <Icon className="large-icon" img="icon-icon_user" />
+        <Icon className="large-icon" img="icon-icon_position" />
         <span className="code">.large-icon</span>
         <br />
       </div>

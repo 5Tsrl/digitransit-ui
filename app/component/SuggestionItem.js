@@ -15,7 +15,6 @@ import {
   getGTFSId,
 } from '../util/suggestionUtils';
 import ComponentUsageExample from './ComponentUsageExample';
-import { PREFIX_ROUTES, PREFIX_STOPS } from '../util/path';
 
 const SuggestionItem = pure(
   ({ item, intl, useTransportIcons, doNotShowLinkToStop, loading }) => {
@@ -31,7 +30,13 @@ const SuggestionItem = pure(
       );
     } else {
       // DT-3262 Icon as string for screen readers
-      const layer = item.properties.layer.replace('route-', '').toLowerCase();
+      // 5t layer è stato aggiunto dopo e i valori del geococker non sono conformi a:
+      // https://github.com/pelias/documentation/blob/master/search.md#filter-by-data-type
+      // todo rimappare qui...
+      // const layer = item.properties.layer.replace('route-', '').toLowerCase();
+      const layer = item.properties.layer
+        ? item.properties.layer.replace('route-', '').toLowerCase()
+        : 'street';
       if (intl) {
         iconstr = intl.formatMessage({
           id: layer,
@@ -168,7 +173,7 @@ const exampleRoute = {
     mode: 'FERRY',
     longName: 'Kauppatori - Suomenlinna',
     layer: 'route-FERRY',
-    link: `/${PREFIX_ROUTES}/HSL:1019`,
+    link: '/route/HSL:1019',
   },
 };
 
@@ -183,7 +188,7 @@ const exampleStop = {
     code: '0221',
     mode: 'tram',
     layer: 'stop',
-    link: `/${PREFIX_STOPS}/HSL:1130446`,
+    link: '/stops/HSL:1130446',
   },
 };
 

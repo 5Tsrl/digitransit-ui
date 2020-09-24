@@ -11,12 +11,11 @@ import Icon from './Icon';
 import withBreakpoint from '../util/withBreakpoint';
 import VehicleMarkerContainer from './map/VehicleMarkerContainer';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
-import { PREFIX_STOPS, PREFIX_TERMINALS } from '../util/path';
 
 const getFullscreenTogglePath = (fullscreenMap, params) =>
-  `/${params.stopId ? PREFIX_STOPS : PREFIX_TERMINALS}/${
+  `/${params.stopId ? 'stops' : 'terminal'}/${
     params.stopId ? params.stopId : params.terminalId
-  }${fullscreenMap ? '' : '/kartta'}`;
+  }${fullscreenMap ? '' : '/map'}`;
 
 const toggleFullscreenMap = (fullscreenMap, params, router) => {
   addAnalyticsEvent({
@@ -90,7 +89,8 @@ const StopPageMap = (
     children.push(fullscreenMapToggle(fullscreenMap, params, router));
   }
 
-  const showScale = fullscreenMap || breakpoint === 'large';
+  // const showScale = fullscreenMap || breakpoint === 'large';
+  const showScale = false
 
   return (
     <MapContainer

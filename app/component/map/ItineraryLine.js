@@ -68,7 +68,7 @@ class ItineraryLine extends React.Component {
 
       objs.push(
         <Line
-          color={leg.route && leg.route.color ? `#${leg.route.color}` : null}
+          color={/* 5t */ false && leg.route && leg.route.color ? `#${leg.route.color}` : null}
           key={`${this.props.hash}_${i}_${mode}`}
           geometry={geometry}
           mode={isCallAgencyPickupType(leg) ? 'call' : mode.toLowerCase()}
@@ -131,7 +131,7 @@ class ItineraryLine extends React.Component {
                 disableModeIcons
                 renderName
                 color={
-                  leg.route && leg.route.color ? `#${leg.route.color}` : null
+                  /* 5t */ false && leg.route && leg.route.color ? `#${leg.route.color}` : null
                 }
                 leg={{
                   from: leg.from,

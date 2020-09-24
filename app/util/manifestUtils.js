@@ -31,7 +31,8 @@ export const generateManifest = (
   name: title || config.title,
   orientation: 'portrait',
   short_name: title || config.title,
-  start_url: `${protocol}//${host}${pathname}?homescreen=1`,
+  // start_url: `${protocol}//${host}${pathname}?homescreen=1`,
+  start_url: `${protocol}//${host}/POS/-/nearyou`,
   theme_color: config.colors.primary,
 });
 

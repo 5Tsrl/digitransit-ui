@@ -10,11 +10,13 @@ export function getIcon(type) {
   switch (type) {
     case 'Palvelupiste':
       return 'icon-icon_service-point';
-    case 'Monilippuautomaatti':
+    case 'HSL Automaatti MNL':
       return 'icon-icon_ticket-machine';
-    case 'Kertalippuautomaatti':
+    case 'HSL Automaatti KL':
       return 'icon-icon_ticket-machine-single';
     case 'Myyntipiste':
+      return 'icon-icon_ticket-sales-point';
+    case 'R-kioski':
       return 'icon-icon_ticket-sales-point';
     default:
       // eslint-disable-next-line no-console
@@ -28,15 +30,15 @@ function TicketSalesPopup(props) {
     <div className="card">
       <Card className="card-padding">
         <CardHeader
-          name={props.Nimi}
-          description={props.Osoite}
-          icon={getIcon(props.Tyyppi)}
+          name={props.NIMI}
+          description={props.OSOITE}
+          icon={getIcon(props.TYYPPI)}
           unlinked
         />
       </Card>
       <MarkerPopupBottom
         location={{
-          address: props.Nimi,
+          address: props.NIMI,
           lat: props.LAT,
           lon: props.LON,
         }}
@@ -55,9 +57,9 @@ TicketSalesPopup.description = (
 );
 
 TicketSalesPopup.propTypes = {
-  Tyyppi: PropTypes.string.isRequired,
-  Nimi: PropTypes.string.isRequired,
-  Osoite: PropTypes.string.isRequired,
+  TYYPPI: PropTypes.string.isRequired,
+  NIMI: PropTypes.string.isRequired,
+  OSOITE: PropTypes.string.isRequired,
   LAT: PropTypes.number.isRequired,
   LON: PropTypes.number.isRequired,
 };

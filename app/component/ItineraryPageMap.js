@@ -80,7 +80,7 @@ function ItineraryPageMap(
     } else {
       router.push({
         ...location,
-        pathname: `${location.pathname}/kartta`,
+        pathname: `${location.pathname}/map`,
       });
     }
     addAnalyticsEvent({
@@ -102,7 +102,8 @@ function ItineraryPageMap(
     bounds = polyline.decode(itinerary.legs[0].legGeometry.points);
   }
 
-  const showScale = fullscreen || breakpoint === 'large';
+  //const showScale = fullscreen || breakpoint === 'large';
+  const showScale = false
 
   // onCenterMap() used to check if the layer has a marker for an itinerary
   // stop, emulate a click on the map to open up the popup

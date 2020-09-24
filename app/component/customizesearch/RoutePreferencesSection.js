@@ -53,19 +53,19 @@ const RoutePreferencesSection = (
           id: 'route-preferences',
         })}
       </h1>
-      <Checkbox
+      {/* 5t no opzione flat <Checkbox
         checked={isAvoidElevationChangesChecked}
         defaultMessage=""
         labelId="route-least-elevation-changes"
         onChange={avoidElevationChangesOnChange}
-      />
+      /> */}
       <Checkbox
         checked={isPreferGreenwaysChecked}
         defaultMessage="Prefer cycleways"
         labelId="route-prefer-greenways"
         onChange={preferGreenwaysOnChange}
       />
-      {/* TODO: to be implemented when OTP/OSM support is available 
+      {/* TODO: to be implemented when OTP/OSM support is available
     <Checkbox
       defaultMessage="Prefer paved routes"
       labelId="route-prefer-paved"
@@ -77,7 +77,7 @@ const RoutePreferencesSection = (
       labelId="route-prefer-winter-maintenance"
       onChange={e => console.log(e.target)}
     /> */}
-      {/* TODO: to be implemented when OTP/OSM support is available 
+      {/* TODO: to be implemented when OTP/OSM support is available
     <Checkbox
       defaultMessage="Prefer illuminated routes"
       labelId="route-prefer-illuminated"

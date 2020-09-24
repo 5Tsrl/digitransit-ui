@@ -32,7 +32,7 @@ const CardHeader = ({
       ) : null}
       {className === 'stop-page header' && (
         <div className="stop-page-header_icon-container">
-          <Icon img="icon-icon_bus-stop" className="stop-page-header_icon" />
+          {/*5T no icon <Icon img="icon-icon_bus-stop" className="stop-page-header_icon" /> */}
         </div>
       )}
       <div className="card-header-wrapper">

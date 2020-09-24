@@ -23,7 +23,7 @@ import { BreakpointConsumer } from '../util/withBreakpoint';
 import ComponentUsageExample from './ComponentUsageExample';
 
 import exampleData from './data/ItineraryTab.exampleData.json';
-import { getFares, shouldShowFareInfo } from '../util/fareUtils';
+import { getFares } from '../util/fareUtils';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
 /* eslint-disable prettier/prettier */
 class ItineraryTab extends React.Component {
@@ -69,7 +69,7 @@ class ItineraryTab extends React.Component {
       name: null,
     });
 
-    const printPath = `${this.props.location.pathname}/tulosta`;
+    const printPath = `${this.props.location.pathname}/print`;
     this.context.router.push({
       ...this.props.location,
       pathname: printPath,
@@ -106,7 +106,7 @@ class ItineraryTab extends React.Component {
                 })}
               >
 
-                {shouldShowFareInfo(config) &&
+                {config.showTicketInformation &&
                   fares.some(fare => fare.isUnknown) && (
                     <div className="disclaimer-container unknown-fare-disclaimer__top">
                       <div className="icon-container">
@@ -134,7 +134,7 @@ class ItineraryTab extends React.Component {
                   itinerary={itinerary}
                   small={breakpoint !== 'large'}
                 />
-                {shouldShowFareInfo(config) && (
+                {config.showTicketInformation && (
                   <TicketInformation
                     fares={fares}
                     zones={getZones(itinerary.legs)}

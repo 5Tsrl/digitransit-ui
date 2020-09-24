@@ -5,7 +5,7 @@ const CONFIG = 'jyvaskyla';
 const APP_TITLE = 'Reittiopas Jyväskylä';
 const APP_DESCRIPTION = 'Jyväskylän uusi reittiopas';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 const minLat = 61.835318;
 const maxLat = 62.603473;
@@ -107,12 +107,6 @@ export default configMerger(walttiConfig, {
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
       },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
-      },
     ],
   },
 
@@ -175,7 +169,6 @@ export default configMerger(walttiConfig, {
   stopCard: {
     header: {
       showZone: true,
-      virtualMonitorBaseUrl: 'https://pysakit.jyvaskyla.fi/stop/',
     },
   },
 });

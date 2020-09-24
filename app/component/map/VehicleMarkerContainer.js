@@ -23,6 +23,7 @@ function getVehicleIcon(
   vehicleNumber,
   useSmallIcon = false,
   useLargeIcon = false,
+  noTail = false,
 ) {
   if (!isBrowser) {
     return null;
@@ -33,7 +34,7 @@ function getVehicleIcon(
           element: (
             <IconWithTail
               img="icon-icon_all-vehicles-large"
-              rotate={heading}
+              rotate={noTail ? undefined : heading}
               allVehicles
               vehicleNumber={vehicleNumber}
               useLargeIcon={useLargeIcon}
@@ -47,7 +48,7 @@ function getVehicleIcon(
           element: (
             <IconWithTail
               img="icon-icon_all-vehicles-small"
-              rotate={heading}
+              rotate={noTail ? undefined : heading}
               allVehicles
             />
           ),
@@ -96,11 +97,18 @@ function shouldShowVehicle(message, direction, tripStart, pattern, headsign) {
       message.direction === direction) &&
     (tripStart === undefined ||
       message.tripStartTime === undefined ||
-      message.tripStartTime === tripStart)
+      message.tripStartTime * 60 + '' === tripStart)
   );
 }
+/* 5t it was
+time:
+  (message.tripStartTime.substring(0, 2) * 60 * 60) +
+  (message.tripStartTime.substring(2, 4) * 60),
 
+*/
 function VehicleMarkerContainer(props) {
+  // console.log('n vehicles:', Object.entries(props.vehicles).length, props.vehicles);
+  // if( (new Date()).getSeconds() % 30 == 0 ) console.log('n vehicles:', Object.entries(props.vehicles).length)
   return Object.entries(props.vehicles)
     .filter(([, message]) =>
       shouldShowVehicle(
@@ -122,11 +130,13 @@ function VehicleMarkerContainer(props) {
         icon={getVehicleIcon(
           props.ignoreMode ? null : message.mode,
           message.heading,
-          message.shortName ? message.shortName : message.route.split(':')[1],
+          message.shortName ? message.shortName : (message.route.split(':')[1]).replace(/U$/, ''), // 5t tolgo U in fondo
           false,
           props.useLargeIcon,
+          message.speed === 0 , // noTail se speed = 0, no ombra
         )}
       >
+        { (/*true ||*/ message.tripId ) &&  // 5t popup solo se tripId  (perdiamo mezzi "?" e 4'  )
         <Popup
           offset={[106, 0]}
           maxWidth={250}
@@ -136,15 +146,17 @@ function VehicleMarkerContainer(props) {
           <Relay.RootContainer
             Component={message.tripId ? TripMarkerPopup : FuzzyTripMarkerPopup}
             route={
-              message.tripId
+              // 5t uso sempre TipMarkerPopup...
+              true || message.tripId
                 ? new TripRoute({ route: message.route, id: message.tripId })
                 : new FuzzyTripRoute({
                     route: message.route,
                     direction: message.direction,
                     date: message.operatingDay,
-                    time:
-                      message.tripStartTime.substring(0, 2) * 60 * 60 +
-                      message.tripStartTime.substring(2, 4) * 60,
+                    time: message.tripStartTime ? message.tripStartTime * 60 : 0,
+                    // time:
+                    //   message.tripStartTime.substring(0, 2) * 60 * 60 +
+                    //   message.tripStartTime.substring(2, 4) * 60,
                   })
             }
             renderLoading={() => (
@@ -153,7 +165,8 @@ function VehicleMarkerContainer(props) {
               </div>
             )}
             renderFetched={data =>
-              message.tripId ? (
+              // 5t uso sempre TipMarkerPopup...
+              true || message.tripId ? (
                 <TripMarkerPopup {...data} message={message} />
               ) : (
                 <FuzzyTripMarkerPopup {...data} message={message} />
@@ -161,6 +174,7 @@ function VehicleMarkerContainer(props) {
             }
           />
         </Popup>
+        }
       </IconMarker>
     ));
 }

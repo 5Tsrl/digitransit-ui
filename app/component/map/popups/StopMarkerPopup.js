@@ -27,6 +27,10 @@ class StopMarkerPopup extends React.PureComponent {
     const { relay, stop, terminal } = this.props;
     const entity = stop || terminal;
     const isTerminal = terminal !== null;
+    //5t
+    if(!entity){
+      console.log('entity undefined!')
+    }
 
     return (
       <div className="card">

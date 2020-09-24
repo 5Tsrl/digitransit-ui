@@ -5,7 +5,7 @@ const CONFIG = 'tampere';
 const APP_TITLE = 'Nyssen reittiopas';
 const APP_DESCRIPTION = 'Nyssen reittiopas';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 const tampereTimetables = require('./timetableConfigUtils').default.tampere;
 
 const minLat = 61.16;
@@ -36,7 +36,7 @@ export default configMerger(walttiConfig, {
 
   favicon: './sass/themes/tampere/favicon.png',
 
-  feedIds: ['tampere', 'TampereVR', 'tampereDRT'],
+  feedIds: ['tampere', 'TampereVR'],
 
   geoJson: {
     layers: [
@@ -75,7 +75,7 @@ export default configMerger(walttiConfig, {
   stopCard: {
     header: {
       showZone: true,
-      virtualMonitorBaseUrl: 'https://tremonitori.digitransit.fi/stop/',
+      virtualMonitorBaseUrl: 'https://tremonitori.digitransit.fi/stop/tampere:',
     },
   },
   showTicketInformation: true,
@@ -153,45 +153,50 @@ export default configMerger(walttiConfig, {
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
       },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
-      },
     ],
   },
 
   staticMessages: [
     {
-      id: '4',
+      id: '3',
       priority: -1,
       shouldTrigger: true,
       persistence: 'repeat',
       content: {
         fi: [
           {
-            type: 'a',
+            type: 'text',
             content:
-              'Tutustu turvallisen matkustamisen ohjeisiin koronaviruksen aikana tästä linkistä',
-            href:
-              'https://joukkoliikenne.tampere.fi/aikataulut-ja-reitit/poikkeusinfo/liikennetiedotteet/korona-viruksen-vaikutukset-nysse-liikenteeseen.html',
+              'Vuoroja voi peruuntua virusepidemian aikana. Tarkista matkasi tiedot ennakkoon. Perutut bussivuorot näkyvät yliviivattuna punaisella eivätkä ne tule reittiehdotuksiin. Perutut junavuorot voi tarkistaa ',
+          },
+          {
+            type: 'a',
+            content: 'VR:n palveluista',
+            href: 'https://www.vr.fi/cs/vr/fi/liikennetilanne',
           },
         ],
         en: [
           {
+            type: 'text',
+            content:
+              'Trips may be canceled during the virus epidemic. Check our travel information in advance. Cancelled bus trips appear in red and do not appear in route suggestions. Please check cancelled train trips at ',
+          },
+          {
             type: 'a',
-            content: 'Please check instructions for safe travelling here',
-            href:
-              'https://joukkoliikenne.tampere.fi/aikataulut-ja-reitit/poikkeusinfo/liikennetiedotteet/korona-viruksen-vaikutukset-nysse-liikenteeseen.html',
+            content: "VR's services",
+            href: 'https://www.vr.fi/cs/vr/en/traffic_info',
           },
         ],
         sv: [
           {
+            type: 'text',
+            content:
+              'Trips may be canceled during the virus epidemic. Check our travel information in advance. Cancelled bus trips appear in red and do not appear in route suggestions. Please check cancelled train trips at ',
+          },
+          {
             type: 'a',
-            content: 'Please check instructions for safe travelling here',
-            href:
-              'https://joukkoliikenne.tampere.fi/aikataulut-ja-reitit/poikkeusinfo/liikennetiedotteet/korona-viruksen-vaikutukset-nysse-liikenteeseen.html',
+            content: "VR's services",
+            href: 'https://www.vr.fi/cs/vr/sv/trafikinfo',
           },
         ],
       },

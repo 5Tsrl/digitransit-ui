@@ -261,7 +261,7 @@ class DTAutosuggest extends React.Component {
       item={item}
       intl={this.context.intl}
       loading={!this.state.valid}
-      useTransportIconsconfig={
+      useTransportIcons={
         this.context.config.search.suggestions.useTransportIcons
       }
     />

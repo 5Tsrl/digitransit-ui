@@ -3,13 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import Relay from 'react-relay/classic';
 
 import Error404 from './component/404';
-import {
-  PREFIX_STOPS,
-  PREFIX_TERMINALS,
-  PREFIX_ROUTES,
-  PREFIX_DISRUPTION,
-  PREFIX_TIMETABLE,
-} from './util/path';
+import { PREFIX_STOPS, PREFIX_TERMINALS } from './util/path';
 import {
   getDefault,
   loadRoute,
@@ -103,36 +97,37 @@ export default function getStopRoutes(isTerminal = false) {
           queries={queries}
           render={RelayRenderer}
         />
+        {/* 5t tradotto kaarta in map, aikatalu in schedule  , linjat in route*/}
         <Route
-          path="kartta"
+          path="map"
           fullscreenMap
           getComponent={getStopPageContentPage}
           queries={queries}
           render={RelayRenderer}
         />
         <Route
-          path={PREFIX_TIMETABLE}
+          path="schedule"
           getComponent={getTimetablePage}
           queries={queries}
           render={RelayRenderer}
         >
-          <Route path="kartta" fullscreenMap />
+          <Route path="map" fullscreenMap />
         </Route>
         <Route
-          path={PREFIX_ROUTES}
+          path="route"
           getComponent={getRoutesAndPlatformsForStops}
           queries={queries}
           render={RelayRenderer}
         >
-          <Route path="kartta" fullscreenMap />
+          <Route path="map" fullscreenMap />
         </Route>
         <Route
-          path={PREFIX_DISRUPTION}
+          path="disruption"
           getComponent={getDisruptions}
           queries={queries}
           render={RelayRenderer}
         >
-          <Route path="kartta" fullscreenMap />
+          <Route path="map" fullscreenMap />
         </Route>
       </Route>
     </Route>

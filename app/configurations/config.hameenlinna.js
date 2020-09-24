@@ -5,7 +5,7 @@ const CONFIG = 'hameenlinna';
 const APP_TITLE = 'reittiopas.hameenlinna.fi';
 const APP_DESCRIPTION = '';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 export default configMerger(walttiConfig, {
   CONFIG,
@@ -35,17 +35,6 @@ export default configMerger(walttiConfig, {
   logo: 'hameenlinna/logo.png',
 
   feedIds: ['Hameenlinna', 'HameenlinnaEly'],
-
-  mapLayers: {
-    tooltip: {
-      fi:
-        'Uutta! Saat nyt vyöhykkeet ja lähellä olevat bussit kartalle asetuksista.',
-      en:
-        'New! You can now get zones and nearby busses on the map from the settings.',
-      sv:
-        'Nytt! I inställningarna kan du nu välja att se zoner och närliggande bussar på kartan.',
-    },
-  },
 
   searchParams: {
     'boundary.rect.min_lat': 60.75705,
@@ -103,12 +92,6 @@ export default configMerger(walttiConfig, {
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
       },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
-      },
     ],
   },
 
@@ -156,7 +139,4 @@ export default configMerger(walttiConfig, {
       showZone: true,
     },
   },
-
-  showAllBusses: true,
-  showVehiclesOnStopPage: true,
 });

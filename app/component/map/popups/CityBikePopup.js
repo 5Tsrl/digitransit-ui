@@ -41,6 +41,7 @@ class CityBikePopup extends React.Component {
             station={this.props.station}
           />
         </CityBikeCardContainer>
+        {this.props.station &&
         <MarkerPopupBottom
           location={{
             address: this.props.station.name,
@@ -48,6 +49,7 @@ class CityBikePopup extends React.Component {
             lon: this.props.station.lon,
           }}
         />
+        }
       </div>
     );
   }
@@ -65,6 +67,8 @@ export default Relay.createContainer(CityBikePopup, {
         spacesAvailable
         state
         networks
+        isFloatingBike
+        isCarStation
       }
     `,
   },

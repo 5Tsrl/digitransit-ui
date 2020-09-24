@@ -1,0 +1,99 @@
+/* mato theme */
+
+/* Base theme */
+@import '../default/theme';
+
+.logo-img{ width:144px; height: 43px; background: url('logo-citta-torino.png') no-repeat center }
+
+/* Operator palette */
+$hsl-blue: #007ac9;
+$hsl-dark-blue: #0062a1;
+$hsl-pink: #f092cd;
+$hsl-alert: #dc0451;
+$hsl-tram-green: #75c045;
+$hsl-metro-orange: #e23850;
+$hsl-rail-red: #8c4799;//a me sembra viola...
+$hsl-ferry-blue: #00b9e4;
+
+//mato palette
+$very-light-gray: #fcfcfc;
+$light-gray: #ddd;
+$medium-gray: #bbb;
+$sky-blue: #2795e7;
+$sky-dark-blue: #2489d6;
+$gray-blue: #78909c;
+//$mato-bus: #2795e7;
+$mato-bus: #2385CD;
+$mato-tram: #75c045;
+$mato-metro: #f52700;
+$mato-funicular: #581e12;
+$mato-rail: #8c4799;
+$mato-bikeshare: #fcc437;//#f7941e;
+$mato-airplane: #0046E6;
+
+$mato-ok: #3ca66a;      //green
+$mato-warning: #ffd011; //yellow
+$mato-ko: #d94434;      //red
+
+$mato-accessible-icon: #1259a7; //#1259a7  blu accessible icon
+
+
+/* Application palette */
+$primary-font-color: $white;
+$bar-font-color: $sky-blue;
+$primary-color: $sky-blue;
+$secondary-color: $white;
+$nav-bar-color: $very-light-gray;
+$favourite-color: $sky-blue;
+$hilight-color: $sky-blue;
+$action-color: $sky-blue;
+$background-color: #eef1f3;
+$tab-color: $sky-dark-blue;
+$tab-selected-color: $sky-blue;
+$accessible-color: $mato-ok;
+$accessible-icon-color: $mato-accessible-icon;
+$cancelation-red: $mato-ko;
+
+/* Component palette */
+$standalone-btn-color: $primary-color;
+$standalone-btn-hover-color: $sky-dark-blue;
+$standalone-btn-active-color: $sky-dark-blue;
+$viewpoint-marker-color: $sky-blue;
+$title-color: $sky-blue;
+$link-color: $sky-dark-blue; //$gray-blue;
+$from-color: #15bc69; // $mato-accessible-icon; //
+$to-color:#6d7be3; // $mato-accessible-icon; //
+//$slider-warning-color: #FC7C08;
+$slider-warning-color: $mato-warning;
+//$slider-ok-color: #55B511;
+$slider-ok-color: $mato-ok;
+
+/* Vehicle palette */
+$airplane-color: $mato-airplane;
+$bus-color: $mato-bus;
+$tram-color: $mato-tram;
+$metro-color: $mato-metro;
+$funicular-color: $mato-funicular;
+$rail-color: $mato-rail;
+$citybike-color: $mato-bikeshare;
+$walk-color: #6ba3af;
+$wait-color: #979797;
+$bicycle-color: #64be14;
+$car-color: #333;
+
+
+/* Fonts */
+//$font-family: "Gotham Rounded SSm A","Gotham Rounded SSm B", Arial, Georgia, Serif;
+$font-family:  Lato, Arial, Georgia, Serif;
+$font-weight-medium: 500;
+$letter-spacing: -0.025em;
+$font-size-medium-large: 1rem;
+
+//$font-family-narrow: "Gotham XNarrow SSm A","Gotham XNarrow SSm B", Arial, Georgia, Serif;
+$font-family-narrow: 'PT Sans Narrow', 'Arial Condensed', Arial, Georgia, Serif;
+/* Navbar logo */
+$nav-logo-width: 370px;
+$nav-logo-height: 2.5em;
+
+/* Spinner */
+$spinner-image: url('mato-spinner.png');

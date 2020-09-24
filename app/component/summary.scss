@@ -138,7 +138,7 @@
     box-shadow: none;
   }
 
-  select {
+  select, .time-input-container {
     &:hover {
       border: solid 1px $link-color;
     }

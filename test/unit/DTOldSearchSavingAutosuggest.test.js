@@ -53,11 +53,11 @@ const placeData = {
   ],
 };
 
-const geocodingURL = '/mock_api_url/geocoding/v1';
+const placeURL = '/mock_api_url/geocoding/v1/place';
 
 describe('<DTOldSearchSavingAutosuggest />', () => {
   beforeEach(() => {
-    const url = `${geocodingURL}/place?ids=${oldSearch.properties.gid}`;
+    const url = `${placeURL}?ids=${oldSearch.properties.gid}`;
     fetchMock.get(url, placeData);
   });
 
@@ -92,7 +92,7 @@ describe('<DTOldSearchSavingAutosuggest />', () => {
           executeAction: () => {},
           config: {
             URL: {
-              GEOCODING_BASE_URL: geocodingURL,
+              PELIAS_PLACE: placeURL,
             },
           },
         },

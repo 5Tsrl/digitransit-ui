@@ -4,7 +4,7 @@ import Relay from 'react-relay/classic';
 import { Link } from 'react-router';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import { FormattedMessage } from 'react-intl';
-import { PREFIX_ROUTES, PREFIX_STOPS } from '../../../util/path';
+import { PREFIX_ROUTES } from '../../../util/path';
 
 import RouteHeader from '../../RouteHeader';
 
@@ -12,22 +12,20 @@ import { addFavourite } from '../../../action/FavouriteActions';
 import { addAnalyticsEvent } from '../../../util/analyticsUtils';
 
 function FuzzyTripMarkerPopup(props) {
-  let patternPath = `/${PREFIX_ROUTES}/${
-    props.trip.route.gtfsId
-  }/${PREFIX_STOPS}`;
+  let patternPath = `/${PREFIX_ROUTES}/${props.trip.route.gtfsId}/stops`; // 5t pysakit
   let tripPath = patternPath;
 
   if (props.trip.fuzzyTrip) {
     patternPath += `/${props.trip.fuzzyTrip.pattern.code}`;
     tripPath = `${patternPath}/${props.trip.fuzzyTrip.gtfsId}`;
   }
-
+  // 5t era trip={props.message.tripStartTime}, mettiamo id (matricola del mezzo)
   return (
     <div className="card">
       <RouteHeader
         route={props.trip.route}
         pattern={props.trip.fuzzyTrip && props.trip.fuzzyTrip.pattern}
-        trip={props.message.tripStartTime}
+        trip={props.message.id}
         favourite={props.favourite}
         addFavouriteRoute={props.addAsFavouriteRoute}
       />

@@ -6,8 +6,9 @@ import { FormattedMessage } from 'react-intl';
 import ComponentUsageExample from './ComponentUsageExample';
 import { cityBikeUrl as exampleUrl } from './ExampleData';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
+import Icon from './Icon';
 
-const CityBikeUse = ({ url, type }) => (
+const CityBikeUse = ({ url, type, logo }) => (
   <div className="city-bike-use-container">
     <p className="sub-header-h4 text-center">
       <FormattedMessage
@@ -19,8 +20,8 @@ const CityBikeUse = ({ url, type }) => (
         defaultMessage="To use city bikes, you need to register"
       />
     </p>
-    <a href={url}>
-      <button
+    <a href={url} target="_blank">
+      {/*<button
         className="use-bike-button cursor-pointer"
         onClick={() => {
           addAnalyticsEvent({
@@ -31,7 +32,8 @@ const CityBikeUse = ({ url, type }) => (
         }}
       >
         <FormattedMessage id="use-citybike" defaultMessage="Start using" />
-      </button>
+      </button>*/}
+      <Icon width={10} height={10} className="prefix-icon nearby-icon" img={`icon-icon_${logo}`} />
     </a>
   </div>
 );

@@ -40,8 +40,9 @@ export const addressToItinerarySearch = location => {
   if (location.set === false) {
     return '-';
   }
-  return `${encodeURIComponent(location.address)}::${location.lat},${
-    location.lon
+  return `${encodeURIComponent(location.address)}::${
+    location.lat.toFixed(5)},${
+    location.lon.toFixed(5)
   }`;
 };
 
@@ -52,7 +53,11 @@ export const locationToOTP = location => {
   if (location.set === false) {
     return '-';
   }
-  return `${location.address}::${location.lat},${location.lon}`;
+  // 5t return `${location.address}::${location.lat},${location.lon}`;
+  if(location.lat){
+    return `${location.address}::${location.lat.toFixed(5)},${location.lon.toFixed(5)}`;
+  }
+  return '-'
 };
 
 export const locationToCoords = location => [location.lat, location.lon];

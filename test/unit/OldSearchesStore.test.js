@@ -11,7 +11,6 @@ import {
   getOldSearchesStorage,
   setOldSearchesStorage,
 } from '../../app/store/localStorage';
-import { PREFIX_ROUTES, PREFIX_STOPS } from '../../app/util/path';
 
 const mockData = {
   old: {
@@ -306,7 +305,7 @@ describe('OldSearchesStore', () => {
               },
             ],
             layer: 'route-BUS',
-            link: `/${PREFIX_ROUTES}/foobar/${PREFIX_STOPS}/foobar:0:01`,
+            link: '/linjat/foobar/pysakit/foobar:0:01',
           },
           geometry: {
             coordinates: null,
@@ -334,7 +333,7 @@ describe('OldSearchesStore', () => {
               },
             ],
             layer: 'route-BUS',
-            link: `/${PREFIX_ROUTES}/tampere:32/${PREFIX_STOPS}/tampere:32:0:01`,
+            link: '/linjat/tampere:32/pysakit/tampere:32:0:01',
           },
           geometry: {
             coordinates: null,

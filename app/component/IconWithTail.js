@@ -46,7 +46,7 @@ const IconWithTail = ({
       >
         {useLargeIcon && (
           <React.Fragment>
-            {rotate !== undefined && (
+            {rotate && (
               <use
                 filter={desaturate ? 'url(#desaturate)' : undefined}
                 xlinkHref="#icon-icon_all-vehicles-shadow"
@@ -100,7 +100,7 @@ const IconWithTail = ({
         className={cx('icon', 'tail-icon', className)}
         ref={el => scrollIntoView && el && el.scrollIntoView()}
       >
-        {rotate !== undefined && (
+        {rotate && (
           <use
             filter={desaturate ? 'url(#desaturate)' : undefined}
             xlinkHref="#icon-icon_vehicle-live-shadow"

@@ -58,3 +58,11 @@
   text-transform: uppercase;
   color: $link-color;
 }
+.icon.wheelchair {
+  width: 22px;
+  height: 22px;
+  fill:#fff;
+  background: $accessible-icon-color;
+  padding: 3px 3px 3px 2px;
+  border-radius: 2px;
+}

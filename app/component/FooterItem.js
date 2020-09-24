@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 import { routerShape } from 'react-router';
 import ComponentUsageExample from './ComponentUsageExample';
 import Icon from './Icon';
@@ -29,13 +29,14 @@ const mapToRoute = (router, route, children, onClick) => (
 
 const FooterItem = (
   { name, href, label, nameEn, route, icon, onClick },
-  { router },
+  { router, intl },
 ) => {
   const displayIcon =
     (icon && <Icon className="footer-icon" img={icon} />) || undefined;
   const displayLabel = label || (
     <FormattedMessage id={name} defaultMessage={nameEn || name} />
   );
+  const langHref = href ? intl.formatMessage({id: href, defaultMessage: href}) : undefined
   let item = (
     <span id={name}>
       {displayIcon}
@@ -43,7 +44,7 @@ const FooterItem = (
     </span>
   );
   if (href) {
-    item = mapToLink(href, item, onClick);
+    item = mapToLink(langHref, item, onClick);
   } else if (route) {
     item = mapToRoute(router, route, item, onClick);
   } else {
@@ -64,6 +65,7 @@ FooterItem.propTypes = {
 
 FooterItem.contextTypes = {
   router: routerShape.isRequired,
+  intl: intlShape.isRequired,
 };
 
 FooterItem.displayName = 'FooterItem';

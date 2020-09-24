@@ -71,13 +71,7 @@ export function getNamedConfiguration(configName) {
       additionalConfig = require(`./configurations/config.${configName}`)
         .default;
     }
-
-    // use cached baseConfig that is potentially patched in server start up
-    // for merge if one is configured
-    const baseConfig = configs[process.env.BASE_CONFIG];
-    const config = baseConfig
-      ? configMerger(baseConfig, additionalConfig)
-      : configMerger(defaultConfig, additionalConfig);
+    const config = configMerger(defaultConfig, additionalConfig);
 
     if (config.useSearchPolygon && config.areaPolygon) {
       // pass poly as 'lon lat, lon lat, lon lat ...' sequence
@@ -130,7 +124,7 @@ export function getNamedConfiguration(configName) {
 }
 
 export function getConfiguration(req) {
-  let configName = process.env.CONFIG || process.env.BASE_CONFIG || 'default';
+  let configName = process.env.CONFIG || 'default';
   let host;
 
   if (req) {

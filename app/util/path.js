@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import lodash_get from 'lodash/get';
 import d from 'debug';
 import {
   otpToLocation,
@@ -8,21 +8,19 @@ import {
 import { addAnalyticsEvent } from './analyticsUtils';
 
 const debug = d('path.js');
-export const TAB_NEARBY = 'lahellasi';
-export const TAB_FAVOURITES = 'suosikit';
-export const PREFIX_ROUTES = 'linjat';
-export const PREFIX_STOPS = 'pysakit';
-export const PREFIX_TERMINALS = 'terminaalit';
-export const PREFIX_ITINERARY_SUMMARY = 'reitti';
-export const PREFIX_TIMETABLE = 'aikataulu';
-export const PREFIX_DISRUPTION = 'hairiot';
+export const TAB_NEARBY = 'nearyou';
+export const TAB_FAVOURITES = 'favourites';
+export const PREFIX_ROUTES = 'route';
+export const PREFIX_STOPS = 'stops';
+export const PREFIX_TERMINALS = 'stations';
+export const PREFIX_ITINERARY_SUMMARY = 'plan';
 export const stopUrl = id => id;
 
 export const getRoutePath = (origin, destination) =>
   [
     `/${PREFIX_ITINERARY_SUMMARY}`,
-    encodeURIComponent(decodeURIComponent(origin)),
-    encodeURIComponent(decodeURIComponent(destination)),
+    encodeURIComponent(decodeURIComponent(origin)).replace('%3A%3A','::').replace(/%2C/gi,','),
+    encodeURIComponent(decodeURIComponent(destination)).replace('%3A%3A','::').replace(/%2C/gi,','),
   ].join('/');
 
 export const getItineraryPath = (from, to, idx) =>
@@ -37,8 +35,10 @@ export const getEndpointPath = (origin, destination, tab) => {
   }
   return [
     '',
-    encodeURIComponent(isEmpty(origin) ? '-' : origin),
-    encodeURIComponent(isEmpty(destination) ? '-' : destination),
+    encodeURIComponent(isEmpty(origin) ? '-' : origin).replace('%3A%3A','::').replace(/%2C/gi,','),
+    encodeURIComponent(isEmpty(destination) ? '-' : destination || '-').replace('%3A%3A','::').replace(/%2C/gi,','),
+    // encodeURIComponent(isEmpty(origin) ? '-' : origin),
+    // encodeURIComponent(isEmpty(destination) ? '-' : destination),
     tab,
   ].join('/');
 };
@@ -54,7 +54,7 @@ export const isItinerarySearch = (origin, destination) => {
 
 export const isItinerarySearchObjects = (origin, destination) => {
   const isSearch =
-    get(origin, 'ready') === true && get(destination, 'ready') === true;
+    lodash_get(origin, 'ready') === true && lodash_get(destination, 'ready') === true;
   return isSearch;
 };
 

@@ -11,7 +11,7 @@
     .toggle-modes {
       flex: 1 1 auto;
       .btn {
-        background: #bbb;
+        background: $medium-gray; //5t #bbb;
         &.bus {
           background-color: $btn-bus-active-background-color;
           &:hover,

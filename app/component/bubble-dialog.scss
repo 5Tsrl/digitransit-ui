@@ -44,6 +44,7 @@ $bubble-dialog-font-size--fullscreen: 1.5rem;
       &.bubble-dialog--tooltip {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         width: 23em;
         max-width: calc(100vw - 5.5em);
       }
@@ -147,7 +148,7 @@ $bubble-dialog-font-size--fullscreen: 1.5rem;
     position: relative;
 
     .icon {
-      color: $primary-color;
+      color: #4d8fd3;// 5t $primary-color;
       height: auto;
       width: auto;
     }

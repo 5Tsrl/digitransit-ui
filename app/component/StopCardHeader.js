@@ -5,6 +5,7 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import CardHeader from './CardHeader';
 import ComponentUsageExample from './ComponentUsageExample';
 import Icon from './Icon';
+import IconWithCaution from './IconWithCaution';
 import ServiceAlertIcon from './ServiceAlertIcon';
 import ZoneIcon from './ZoneIcon';
 import { getZoneLabelColor, getZoneLabel } from '../util/mapIconUtils';
@@ -30,12 +31,12 @@ class StopCardHeader extends React.Component {
     return description;
   }
 
-  getExternalLink(gtfsId, isPopUp) {
+  getExternalLink(code, isPopUp) {
     // Check for popup from stopMarkerPopup, should the external link be visible
-    if (!gtfsId || isPopUp || !this.headerConfig.virtualMonitorBaseUrl) {
+    if (!code || isPopUp || !this.headerConfig.virtualMonitorBaseUrl) {
       return null;
     }
-    const url = `${this.headerConfig.virtualMonitorBaseUrl}${gtfsId}`;
+    const url = `${this.headerConfig.virtualMonitorBaseUrl}${code}`;
     return (
       <ExternalLink className="external-stop-link" href={url}>
         {' '}
@@ -71,6 +72,19 @@ class StopCardHeader extends React.Component {
     if (!stop) {
       return false;
     }
+    // setto l'icona di fermata accessibile o meno
+    const wcIcon = stop.wheelchairBoarding === 'POSSIBLE'
+      ? <Icon title={this.context.intl.formatMessage({
+            id: 'accessible-stop',
+            defaultMessage: 'accessible stop',
+          })} key='wc' className='wheelchair' img="icon-icon_wheelchair" />
+      : <IconWithCaution title={this.context.intl.formatMessage({
+            id: 'not-accessible-stop',
+            defaultMessage: 'not accessible stop',
+          })} key='wc' className='wheelchair' img="icon-icon_wheelchair" />
+
+    // se viene passata icons, aggiungo
+    const wcIcons = icons ? [wcIcon].concat(icons) : [wcIcon]
 
     return (
       <CardHeader
@@ -88,8 +102,8 @@ class StopCardHeader extends React.Component {
         name={stop.name}
         description={this.getDescription()}
         code={this.headerConfig.showStopCode && stop.code ? stop.code : null}
-        externalLink={this.getExternalLink(stop.gtfsId, isPopUp)}
-        icons={icons}
+        externalLink={this.getExternalLink(stop.code, isPopUp)}
+        icons={wcIcons}
       >
         {this.headerConfig.showZone &&
           stop.zoneId && (

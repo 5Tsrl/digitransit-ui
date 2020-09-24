@@ -5,7 +5,7 @@ const CONFIG = 'kouvola';
 const APP_TITLE = 'Kouvolan reittiopas';
 const APP_DESCRIPTION = 'Kouvolan reittiopas';
 
-const walttiConfig = require('./config.waltti').default;
+const walttiConfig = require('./waltti').default;
 
 const minLat = 60.574886232976134;
 const maxLat = 61.2909051236272;
@@ -84,12 +84,6 @@ export default configMerger(walttiConfig, {
         nameEn: 'About this service',
         route: '/tietoja-palvelusta',
         icon: 'icon-icon_info',
-      },
-      {
-        name: 'accessibility-statement',
-        nameEn: 'Accessibility statement',
-        href:
-          'https://kauppa.waltti.fi/media/authority/154/files/Saavutettavuusseloste_Waltti-reittiopas_JyQfJhC.htm',
       },
     ],
   },

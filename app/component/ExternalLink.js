@@ -9,6 +9,8 @@ const ExternalLink = ({ name, children, href, className, onClick }) =>
     <span className={className}>
       <span className="external-link-container">
         <a
+          rel="noopener noreferrer"
+          target="_blank"
           onClick={e => {
             e.stopPropagation();
             if (onClick) {

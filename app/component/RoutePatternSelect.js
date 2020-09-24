@@ -19,10 +19,9 @@ import {
   routePatterns as exampleRoutePatterns,
   twoRoutePatterns as exampleTwoRoutePatterns,
 } from './ExampleData';
-import { PREFIX_ROUTES, PREFIX_STOPS } from '../util/path';
+import { PREFIX_ROUTES } from '../util/path';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
 // DT-3317
-
 const DATE_FORMAT = 'YYYYMMDD';
 
 class RoutePatternSelect extends Component {
@@ -59,6 +58,21 @@ class RoutePatternSelect extends Component {
     }
   };
 
+  onePatternPerDirection = (patterns) => {
+    return patterns.reduce( (accumulator, currentValue) => {
+      const findIdx = accumulator.findIndex( el => el.directionId === currentValue.directionId)
+      if (findIdx >= 0){ // pattern direction già presente
+        if(currentValue.tripsForDate && accumulator[findIdx].tripsForDate.length < currentValue.tripsForDate.length){ // quello già presente ha meno corse
+          accumulator[findIdx] = currentValue  // lo sostituisco coll'elemnto corrente
+        }
+      } else {// pattern direction non ancora presente
+        accumulator.push(currentValue)
+      }
+      return accumulator
+
+    }, [])
+  }
+
   getOptions = () => {
     const { gtfsId, params, route, useCurrentTime, lang } = this.props; // DT-3182: added useCurrentTime, DT-3347: added lang
     const { router } = this.context;
@@ -68,6 +82,7 @@ class RoutePatternSelect extends Component {
       return null;
     }
 
+    // 5t più che trips sono i diversi pattern, ordinati per direzione 0 e 1
     const futureTrips = enrichPatterns(
       patterns,
       useCurrentTime,
@@ -109,9 +124,7 @@ class RoutePatternSelect extends Component {
       });
 
     if (options.every(o => o.key !== params.patternId)) {
-      router.replace(
-        `/${PREFIX_ROUTES}/${gtfsId}/${PREFIX_STOPS}/${options[0].key}`,
-      );
+      router.replace(`/${PREFIX_ROUTES}/${gtfsId}/stops/${options[0].key}`);
     } else if (options.length > 0 && this.state.loading === true) {
       this.setState({ loading: false });
     }
@@ -223,9 +236,14 @@ const withStore = connectToStores(
     fragments: {
       route: () => Relay.QL`
       fragment on Route {
+        agency {
+          gtfsId
+           # name
+        }
         patterns {
           code
           headsign
+          directionId
           stops {
             name
           }

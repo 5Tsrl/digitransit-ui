@@ -65,6 +65,9 @@ table.nearby-departures-table {
           .city-bike-station-availability {
             padding-right: 0.3em;
           }
+          .bikes-total {
+            padding-right: 0.3em;
+          }
         }
         &.td-route-number {
           flex-basis: 4.5em;
@@ -97,6 +100,7 @@ table.nearby-departures-table {
             font-size: $font-size-medium-large;
             height: $font-size-medium-large;
             width: auto;
+            white-space: nowrap; //5t
           }
         }
         &.td-destination,

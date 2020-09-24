@@ -146,6 +146,7 @@ export default class FavouriteLocationsContainer extends React.Component {
 
       return (
         <Relay.RootContainer
+          key={index}
           Component={FavouriteLocationContainer}
           forceFetch
           key={`relay_${key}`}

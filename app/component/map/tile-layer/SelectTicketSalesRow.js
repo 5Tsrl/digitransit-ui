@@ -10,11 +10,11 @@ function SelectTicketSalesRow(props) {
     <div className="no-margin">
       <div className="cursor-pointer select-row" onClick={props.selectRow}>
         <div className="padding-vertical-normal select-row-icon">
-          <Icon img={getIcon(props.Tyyppi)} />
+          <Icon img={getIcon(props.TYYPPI)} />
         </div>
         <div className="padding-vertical-normal select-row-text">
           <span className="header-primary no-margin link-color">
-            {props.Nimi} ›
+            {props.NIMI} ›
           </span>
         </div>
         <div className="clear" />
@@ -37,8 +37,8 @@ SelectTicketSalesRow.description = () => (
 
 SelectTicketSalesRow.propTypes = {
   selectRow: PropTypes.func.isRequired,
-  Tyyppi: PropTypes.string.isRequired,
-  Nimi: PropTypes.string.isRequired,
+  TYYPPI: PropTypes.string.isRequired,
+  NIMI: PropTypes.string.isRequired,
 };
 
 export default SelectTicketSalesRow;

@@ -73,7 +73,7 @@ function MarkerSelectPopup(props) {
           location={{
             address:
               props.options[0].feature.properties.name ||
-              props.options[0].feature.properties.Nimi,
+              props.options[0].feature.properties.NIMI,
             lat: props.location.lat,
             lon: props.location.lng,
           }}

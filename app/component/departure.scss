@@ -198,6 +198,13 @@
   height: 0.5em;
   width: 0.5em;
 }
+.time.accessible{
+  text-decoration: underline $accessible-color;
+}
+.time.notaccessible{
+  text-decoration: underline $cancelation-red;
+  text-decoration-style: wavy;
+}
 
 .card .canceled .time {
   margin-top: inherit;
@@ -226,7 +233,7 @@
   .route-number {
     padding-left: 0.35em;
     padding-bottom: 4px;
-    width: 3.5em;
+    width: 4.5em;
     vertical-align: middle;
     margin-bottom: -6px;
     overflow-x: hidden;
@@ -310,7 +317,7 @@
     text-align: right;
   }
   .route-number-header {
-    width: 3.5em;
+    width: 4.5em;
   }
   .route-destination-header {
     font-size: $font-size-xsmall;

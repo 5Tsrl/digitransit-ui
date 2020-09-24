@@ -16,21 +16,19 @@ import {
   stoptimeHasCancelation,
 } from '../util/alertUtils';
 import { isCallAgencyDeparture } from '../util/legUtils';
-import { PREFIX_ROUTES, PREFIX_STOPS } from '../util/path';
+import { PREFIX_ROUTES } from '../util/path';
 
-const DepartureRow = (
-  { departure, currentTime, distance, displayNextDeparture },
-  context,
-) => {
+const DepartureRow = ({ departure, currentTime, distance }, context) => {
   let departureTimes;
   let stopAlerts = [];
   let headsign;
   if (departure.stoptimes) {
     departureTimes = departure.stoptimes.map(departureTime => {
       stopAlerts = getServiceAlertsForStop(departureTime.stop);
-      // eslint-disable-next-line prefer-destructuring
-      headsign = departureTime.headsign;
+      headsign = departureTime.stopHeadsign;
       const canceled = departureTime.realtimeState === 'CANCELED';
+      const accessible = departureTime.trip ? departureTime.trip.wheelchairAccessible : 'undefined'
+      // 5t const tripShortName = departureTime.trip ? departureTime.trip.tripShortName : 'undefined'
       const key = `${departure.pattern.route.gtfsId}:${
         departure.pattern.headsign
       }:${departureTime.realtimeDeparture}`;
@@ -44,11 +42,13 @@ const DepartureRow = (
             realtime={departureTime.realtime}
             currentTime={currentTime}
             canceled={canceled}
+            accessible={accessible}
           />
         </td>
       );
     });
   }
+  /* TODO gestione tripShortName */
 
   const getDeparture = val => {
     context.router.push(val);
@@ -57,26 +57,20 @@ const DepartureRow = (
   // DT-3331: added query string sort=no
   const departureLinkUrl = `/${PREFIX_ROUTES}/${
     departure.pattern.route.gtfsId
-  }/${PREFIX_STOPS}/${departure.pattern.code}?sort=no`;
+  }/stops/${departure.pattern.code}?sort=no`;
 
-  // In case displayNextDeparture is false, only show one departure.
   // In case there's only one departure for the route,
   // add a dummy cell to keep the table layout from breaking
-  const departureTimesChecked = () => {
-    if (displayNextDeparture) {
-      if (departureTimes.length < 2) {
-        return [
+  const departureTimesChecked =
+    departureTimes.length < 2
+      ? [
           departureTimes[0],
           <td
             key={`${departureTimes[0].key}-empty`}
             className="td-departure-times"
           />,
-        ];
-      }
-      return departureTimes;
-    }
-    return [departureTimes[0]];
-  };
+        ]
+      : departureTimes;
 
   const hasActiveAlert = isAlertActive(
     departure.stoptimes.filter(stoptimeHasCancelation),
@@ -115,7 +109,7 @@ const DepartureRow = (
           }
         />
       </td>
-      {departureTimesChecked()}
+      {departureTimesChecked}
     </tr>
   );
 };
@@ -126,11 +120,6 @@ DepartureRow.propTypes = {
   departure: PropTypes.object.isRequired,
   distance: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
-  displayNextDeparture: PropTypes.bool,
-};
-
-DepartureRow.defaultProps = {
-  displayNextDeparture: true,
 };
 
 DepartureRow.contextTypes = {
@@ -238,7 +227,7 @@ export default Relay.createContainer(DepartureRow, {
           pickupType
           realtime
           serviceDay
-          headsign
+          stopHeadsign
           stop {
             code
             platformCode
@@ -246,6 +235,7 @@ export default Relay.createContainer(DepartureRow, {
           }
           trip {
             gtfsId
+            wheelchairAccessible
           }
         }
       }

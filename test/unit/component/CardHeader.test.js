@@ -32,11 +32,20 @@ describe('<CardHeader />', () => {
       name: 'Pasilan asema',
       code: '7528',
       network: 'citybike',
-      externalLink: (
-        <ExternalLink href="http://foo.com/virtualmonitor/HSL:1130181" />
-      ),
+      externalLink: <ExternalLink url="test" />,
     };
-    const wrapper = shallowWithIntl(<CardHeader {...props} />);
+    const wrapper = shallowWithIntl(<CardHeader {...props} />, {
+      context: {
+        config: {
+          stopCard: {
+            header: {
+              showZone: false,
+              virtualMonitorBaseUrl: 'testurl',
+            },
+          },
+        },
+      },
+    });
     expect(wrapper.find(ExternalLink)).to.have.lengthOf(1);
   });
 
@@ -49,7 +58,18 @@ describe('<CardHeader />', () => {
       network: 'citybike',
       externalLink: null,
     };
-    const wrapper = shallowWithIntl(<CardHeader {...props} />);
+    const wrapper = shallowWithIntl(<CardHeader {...props} />, {
+      context: {
+        config: {
+          stopCard: {
+            header: {
+              showZone: false,
+              virtualMonitorBaseUrl: 'testurl',
+            },
+          },
+        },
+      },
+    });
     expect(wrapper.find(ExternalLink)).to.have.lengthOf(0);
   });
 });

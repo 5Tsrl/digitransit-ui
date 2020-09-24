@@ -24,19 +24,18 @@ import {
 } from '../util/alertUtils';
 import withBreakpoint from '../util/withBreakpoint';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
-import {
-  PREFIX_DISRUPTION,
-  PREFIX_ROUTES,
-  PREFIX_STOPS,
-  PREFIX_TERMINALS,
-  PREFIX_TIMETABLE,
-} from '../util/path';
 
+// 5t const Tab = {
+//   Disruptions: 'hairiot',
+//   RightNow: 'right-now',
+//   RoutesAndPlatforms: 'linjat',
+//   Timetable: 'aikataulu',
+// };
 const Tab = {
-  Disruptions: PREFIX_DISRUPTION,
+  Disruptions: 'disruption',
   RightNow: 'right-now',
-  RoutesAndPlatforms: PREFIX_ROUTES,
-  Timetable: PREFIX_TIMETABLE,
+  RoutesAndPlatforms: 'route',
+  Timetable: 'schedule',
 };
 
 const getActiveTab = pathname => {
@@ -62,7 +61,7 @@ function StopPageTabContainer(
   const activeTab = getActiveTab(pathname);
   const isTerminal = params.terminalId != null;
   const urlBase = `/${
-    isTerminal ? PREFIX_TERMINALS : PREFIX_STOPS
+    isTerminal ? 'terminaalit' : 'stops' // 5t 'pysakit'
   }/${encodeURIComponent(
     params.terminalId ? params.terminalId : params.stopId,
   )}`;
@@ -215,7 +214,7 @@ function StopPageTabContainer(
               </div>
             </div>
           </Link>
-          <Link
+          {/*<Link
             to={`${urlBase}/${Tab.Disruptions}`}
             className={cx('stop-tab-singletab', {
               active: activeTab === Tab.Disruptions,
@@ -247,7 +246,7 @@ function StopPageTabContainer(
                 <FormattedMessage id="disruptions" />
               </div>
             </div>
-          </Link>
+          </Link> */}
         </div>
         <div className="stop-tabs-fillerline" />
       </div>

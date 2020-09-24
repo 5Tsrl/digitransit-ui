@@ -55,11 +55,6 @@ class RouteStop extends React.PureComponent {
     currentTime: PropTypes.number.isRequired,
     first: PropTypes.bool,
     last: PropTypes.bool,
-    displayNextDeparture: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    displayNextDeparture: true,
   };
 
   static description = () => (
@@ -138,8 +133,8 @@ class RouteStop extends React.PureComponent {
       mode,
       stop,
       vehicle,
-      displayNextDeparture,
     } = this.props;
+
     const patternExists =
       stop.stopTimesForPattern && stop.stopTimesForPattern.length > 0;
 
@@ -156,9 +151,10 @@ class RouteStop extends React.PureComponent {
                 route: vehicle.route,
                 direction: vehicle.direction,
                 date: vehicle.operatingDay,
-                time:
-                  vehicle.tripStartTime.substring(0, 2) * 60 * 60 +
-                  vehicle.tripStartTime.substring(2, 4) * 60,
+                // time:
+                //   vehicle.tripStartTime.substring(0, 2) * 60 * 60 +
+                //   vehicle.tripStartTime.substring(2, 4) * 60,
+                time: vehicle.tripStartTime * 60,
               })
         }
         renderFetched={data =>
@@ -188,7 +184,7 @@ class RouteStop extends React.PureComponent {
           >
             <circle
               strokeWidth="2"
-              stroke={color || 'currentColor'}
+              stroke={'currentColor'}
               fill="white"
               cx="6"
               cy="13"
@@ -237,7 +233,7 @@ class RouteStop extends React.PureComponent {
                 {distance && (
                   <WalkDistance
                     className="nearest-route-stop"
-                    icon="icon_location-with-user"
+                    icon="map_track"
                     walkDistance={distance}
                   />
                 )}
@@ -245,23 +241,14 @@ class RouteStop extends React.PureComponent {
             </div>
             {patternExists && (
               <div className="departure-times-container">
-                {displayNextDeparture ? (
-                  stop.stopTimesForPattern.map(stopTime => (
-                    <div
-                      key={stopTime.scheduledDeparture}
-                      className="route-stop-time"
-                    >
-                      {fromStopTime(stopTime, currentTime)}
-                    </div>
-                  ))
-                ) : (
+                {stop.stopTimesForPattern.map(stopTime => (
                   <div
-                    key={stop.stopTimesForPattern[0].scheduledDeparture}
+                    key={stopTime.scheduledDeparture}
                     className="route-stop-time"
                   >
-                    {fromStopTime(stop.stopTimesForPattern[0], currentTime)}
+                    {fromStopTime(stopTime, currentTime)}
                   </div>
-                )}
+                ))}
               </div>
             )}
           </Link>

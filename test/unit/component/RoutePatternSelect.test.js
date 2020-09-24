@@ -9,7 +9,6 @@ import { mockContext } from '../helpers/mock-context';
 import { Component as RoutePatternSelect } from '../../../app/component/RoutePatternSelect';
 import dt2887 from '../test-data/dt2887';
 import dt2887b from '../test-data/dt2887b';
-import { PREFIX_STOPS } from '../../../app/util/path';
 import * as analytics from '../../../app/util/analyticsUtils';
 
 describe('<RoutePatternSelect />', () => {
@@ -53,7 +52,7 @@ describe('<RoutePatternSelect />', () => {
   it('should render a toggle element with divs if there are no patterns with trips', () => {
     const props = {
       lang: 'fi', // DT-3347
-      activeTab: PREFIX_STOPS,
+      activeTab: 'pysakit',
       gtfsId: 'HSL:3002U',
       onSelectChange: () => {},
       params: {
@@ -116,7 +115,7 @@ describe('<RoutePatternSelect />', () => {
 
     const props = {
       lang: 'fi', // DT-3347
-      activeTab: PREFIX_STOPS,
+      activeTab: 'pysakit',
       gtfsId: 'HSL:3002U',
       onSelectChange: () => {},
       params: {
@@ -187,7 +186,7 @@ describe('<RoutePatternSelect />', () => {
   it('should not crash if there are no patterns with trips available for the current date', () => {
     const props = {
       lang: 'fi', // DT-3347
-      activeTab: PREFIX_STOPS,
+      activeTab: 'pysakit',
       gtfsId: 'HSL:3002U',
       onSelectChange: () => {},
       params: {
@@ -229,7 +228,7 @@ describe('<RoutePatternSelect />', () => {
   it('should not display a single pattern as a div inside a select element', () => {
     const props = {
       lang: 'fi', // DT-3347
-      activeTab: PREFIX_STOPS,
+      activeTab: 'pysakit',
       gtfsId: 'LINKKI:9422',
       onSelectChange: () => {},
       params: {
@@ -338,7 +337,7 @@ describe('<RoutePatternSelect />', () => {
       useCurrentTime: true,
       onSelectChange: () => {},
       gtfsId: 'HSL:1010',
-      activeTab: PREFIX_STOPS,
+      activeTab: 'pysakit',
       className: 'bp-large',
       serviceDay,
       relay: {

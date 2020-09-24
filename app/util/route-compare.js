@@ -7,7 +7,7 @@ export default function routeCompare(routea, routeb) {
   ) {
     const agencyCompare = routea.agency.name.localeCompare(routeb.agency.name);
     if (agencyCompare !== 0) {
-      return agencyCompare;
+      return -agencyCompare; //5t "GTT servizio urbano" first
     }
   }
   const partsA = (routea.shortName || '').match(/^[A-Za-z]?(0*)([0-9]*)/);
